@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using API.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,8 @@ public class TbMUniversity : IEntity<int>
     [InverseProperty("University")]
     public virtual ICollection<TbMEducation> TbMEducations { get; set; } = new List<TbMEducation>();
 
+    [JsonIgnore]
+    [NotMapped]
     public int Pk
     {
         get => Id;
