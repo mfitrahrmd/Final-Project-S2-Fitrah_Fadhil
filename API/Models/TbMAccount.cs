@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using API.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Models;
 
 [Table("TB_M_Accounts")]
-public class TbMAccount
+public class TbMAccount : IEntity<string>
 {
     [Key]
     [Column("employee_nik")]
@@ -24,4 +26,12 @@ public class TbMAccount
 
     [InverseProperty("AccountNikNavigation")]
     public virtual ICollection<TbTrAccountRole> TbTrAccountRoles { get; set; } = new List<TbTrAccountRole>();
+
+    [JsonIgnore]
+    [NotMapped]
+    public string Pk
+    {
+        get => EmployeeNik;
+        set => EmployeeNik = value;
+    }
 }
