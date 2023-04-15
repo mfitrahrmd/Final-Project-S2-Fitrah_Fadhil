@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using API.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Models;
@@ -7,7 +9,7 @@ namespace API.Models;
 [Table("TB_TR_Account_Roles")]
 [Index("AccountNik", Name = "ix_tb_tr_account_roles_account_nik")]
 [Index("RoleId", Name = "ix_tb_tr_account_roles_role_id")]
-public class TbTrAccountRole
+public class TbTrAccountRole : IEntity<int>
 {
     [Key] [Column("id")] public int Id { get; set; }
 
@@ -25,4 +27,12 @@ public class TbTrAccountRole
     [ForeignKey("RoleId")]
     [InverseProperty("TbTrAccountRoles")]
     public virtual TbMRole Role { get; set; } = null!;
+
+    [JsonIgnore]
+    [NotMapped]
+    public int Pk
+    {
+        get => Id;
+        set => Id = value;
+    }
 }
