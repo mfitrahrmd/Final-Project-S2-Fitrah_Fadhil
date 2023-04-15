@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Repositories.Contracts;
 
 public abstract class CoreRepository<TPk, TEntity, TContext> : IBaseRepository<TPk, TEntity>
-    where TEntity : class
+    where TEntity : class, IEntity<TPk>
     where TContext : DbContext
 {
     protected readonly TContext _context;
@@ -25,18 +25,15 @@ public abstract class CoreRepository<TPk, TEntity, TContext> : IBaseRepository<T
     {
         return _context.Set<TEntity>().ToList();
     }
+    
+    public async Task<IEnumerable<TEntity>> FindAll(int limit, int offset)
+    {
+        return _context.Set<TEntity>().Skip(offset).Take(limit);
+    }
 
     public async Task<TEntity?> FindOneByPk(TPk pk)
     {
         return await _context.Set<TEntity>().FindAsync(pk);
-    }
-
-    private TEntity? FindOneByPkAsNoTracking(TPk pk)
-    {
-        var foundEntity = _context.Set<TEntity>().Find(pk);
-        _context.Entry(foundEntity).State = EntityState.Detached;
-
-        return foundEntity;
     }
 
     public async Task<TEntity?> DeleteOneByPk(TPk pk)
@@ -50,7 +47,7 @@ public abstract class CoreRepository<TPk, TEntity, TContext> : IBaseRepository<T
 
         var rowAffected = await _context.SaveChangesAsync();
 
-        return rowAffected < 1 ? null : foundEntity;
+        return rowAffected.Equals(1) ? foundEntity : null;
     }
 
     public async Task<TEntity?> UpdateOneByPk(TPk pk, TEntity entity)
@@ -58,12 +55,26 @@ public abstract class CoreRepository<TPk, TEntity, TContext> : IBaseRepository<T
         var foundEntity = FindOneByPkAsNoTracking(pk);
 
         if (foundEntity is null)
-            return foundEntity;
+            return null;
+
+        entity.Pk = foundEntity.Pk;
         
         _context.Set<TEntity>().Update(entity);
 
         var rowAffected = await _context.SaveChangesAsync();
 
-        return rowAffected < 1 ? null : foundEntity;
+        return rowAffected.Equals(1) ? entity : null;
+    }
+
+    private TEntity? FindOneByPkAsNoTracking(TPk pk)
+    {
+        var foundEntity = _context.Set<TEntity>().Find(pk);
+        
+        if (foundEntity is null)
+            return null;
+        
+        _context.Entry(foundEntity).State = EntityState.Detached;
+
+        return foundEntity;
     }
 }
