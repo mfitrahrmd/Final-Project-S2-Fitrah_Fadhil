@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using API.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Models;
 
 [Table("TB_M_Employees")]
 [Index("Email", Name = "ix_tb_m_employees_email", IsUnique = true)]
-public class TbMEmployee
+public class TbMEmployee : IEntity<string>
 {
     [Key]
     [Column("nik")]
@@ -45,4 +47,12 @@ public class TbMEmployee
 
     [InverseProperty("EmployeeNikNavigation")]
     public virtual TbTrProfiling? TbTrProfiling { get; set; }
+    
+    [JsonIgnore]
+    [NotMapped]
+    public string Pk
+    {
+        get => Nik;
+        set => Nik = value;
+    }
 }
