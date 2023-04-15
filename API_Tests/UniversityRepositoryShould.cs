@@ -35,23 +35,35 @@ public class UniversityRepositoryShould : API_Tests
             new  TestCase
             {
                 Name = "Find universities contain existing name",
-                University = new TbMUniversity
-                {
-                    Name = "Sriwijaya"
-                },
+                UniversityName = "Sriwijaya",
                 Result = u =>
                 {
                     Assert.AreEqual(2, u.Count());
                 }
+            },
+            new  TestCase
+            {
+                Name = "Find universities contain non existing name",
+                UniversityName = "Nothing",
+                Result = u =>
+                {
+                    Assert.AreEqual(0, u.Count());
+                }
             }
+        });
+        
+        testCases.ForEach(async tc =>
+        {
+            var foundUniversities = await _universityRepository.FindManyContainsName(tc.UniversityName);
+
+            tc.Result(foundUniversities);
         });
     }
     
     private struct TestCase
     {
         public string Name { get; set; }
-        public int Id { get; set; }
-        public TbMUniversity University { get; set; }
+        public string UniversityName { get; set; }
         public Action<IEnumerable<TbMUniversity>> Result;
     }
 }

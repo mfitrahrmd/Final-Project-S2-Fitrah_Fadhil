@@ -1,13 +1,13 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:Boolean x:Key="/Default/Environment/Filtering/IncludeCoverageFilters/=API_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ec77068f_002D9ef2_002D4818_002Da76c_002D7cbb0386170e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ec77068f_002D9ef2_002D4818_002Da76c_002D7cbb0386170e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::63223393-E6B5-49B2-865D-338309F0A04C::net7.0::API_Tests.UnitTest1&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::39BFAF83-B92F-49CF-B999-B77C8FE9958E::net7.0::API_Tests2.UniversityRepositoryShould&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::B1E88803-9DB9-4B82-A8B6-EC78D7EDDBBC::net7.0::API_Tests.UniversityRepositoryShould&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::B1E88803-9DB9-4B82-A8B6-EC78D7EDDBBC::net7.0::API_Tests.EmployeeRepositoryShould&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ef906dfb_002De0cd_002D412d_002Dbf5e_002D63a8673d5be6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="API_Tests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ef906dfb_002De0cd_002D412d_002Dbf5e_002D63a8673d5be6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="API_Tests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;MSTest::B1E88803-9DB9-4B82-A8B6-EC78D7EDDBBC::net7.0::API_Tests.CoreRepositoryShould&lt;/TestId&gt;
     &lt;TestId&gt;MSTest::B1E88803-9DB9-4B82-A8B6-EC78D7EDDBBC::net7.0::API_Tests.UniversityRepositoryShould&lt;/TestId&gt;
