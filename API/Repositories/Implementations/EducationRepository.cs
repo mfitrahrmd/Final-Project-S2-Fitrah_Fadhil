@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories.Implementations;
 
-public class EducationRepository<TContext> : CoreRepository<int, TbMEducation, TContext>
+public class EducationRepository<TContext> : CoreRepository<int, TbMEducation, TContext>, IEducationRepository
     where TContext : DbContext
 {
     public EducationRepository(TContext context) : base(context)
