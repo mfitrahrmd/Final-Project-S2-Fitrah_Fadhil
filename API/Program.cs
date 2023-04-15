@@ -16,6 +16,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddScoped<IUniversityRepository, UniversityRepository<Tugas6Context>>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository<Tugas6Context>>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository<Tugas6Context>>();
+builder.Services.AddScoped<IEducationRepository, EducationRepository<Tugas6Context>>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
