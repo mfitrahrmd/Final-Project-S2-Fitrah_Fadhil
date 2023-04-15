@@ -19,6 +19,7 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository<Tugas6Context>>();
 builder.Services.AddScoped<IEducationRepository, EducationRepository<Tugas6Context>>();
 builder.Services.AddScoped<IProfilingRepository, ProfilingRepository<Tugas6Context>>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository<Tugas6Context>>();
+builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository<Tugas6Context>>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
