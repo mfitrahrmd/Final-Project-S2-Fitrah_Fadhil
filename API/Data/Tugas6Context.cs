@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using API.Models;
+﻿using API.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
@@ -31,7 +29,9 @@ public partial class Tugas6Context : DbContext
     public virtual DbSet<TbTrProfiling> TbTrProfilings { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:Default");
+    {
+        optionsBuilder.UseSqlServer("Name=ConnectionStrings:Default");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -41,7 +41,8 @@ public partial class Tugas6Context : DbContext
 
             entity.Property(e => e.EmployeeNik).IsFixedLength();
 
-            entity.HasOne(d => d.EmployeeNikNavigation).WithOne(p => p.TbMAccount).HasConstraintName("fk_tb_m_accounts_tb_m_employees_employee_nik");
+            entity.HasOne(d => d.EmployeeNikNavigation).WithOne(p => p.TbMAccount)
+                .HasConstraintName("fk_tb_m_accounts_tb_m_employees_employee_nik");
         });
 
         modelBuilder.Entity<TbMEducation>(entity =>
@@ -64,15 +65,9 @@ public partial class Tugas6Context : DbContext
             entity.Property(e => e.Nik).IsFixedLength();
         });
 
-        modelBuilder.Entity<TbMRole>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("pk_tb_m_roles");
-        });
+        modelBuilder.Entity<TbMRole>(entity => { entity.HasKey(e => e.Id).HasName("pk_tb_m_roles"); });
 
-        modelBuilder.Entity<TbMUniversity>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("pk_tb_m_universities");
-        });
+        modelBuilder.Entity<TbMUniversity>(entity => { entity.HasKey(e => e.Id).HasName("pk_tb_m_universities"); });
 
         modelBuilder.Entity<TbTrAccountRole>(entity =>
         {
@@ -95,9 +90,11 @@ public partial class Tugas6Context : DbContext
 
             entity.Property(e => e.EmployeeNik).IsFixedLength();
 
-            entity.HasOne(d => d.Education).WithOne(p => p.TbTrProfiling).HasConstraintName("fk_tb_tr_profilings_tb_m_educations_education_id");
+            entity.HasOne(d => d.Education).WithOne(p => p.TbTrProfiling)
+                .HasConstraintName("fk_tb_tr_profilings_tb_m_educations_education_id");
 
-            entity.HasOne(d => d.EmployeeNikNavigation).WithOne(p => p.TbTrProfiling).HasConstraintName("fk_tb_tr_profilings_tb_m_employees_employee_nik");
+            entity.HasOne(d => d.EmployeeNikNavigation).WithOne(p => p.TbTrProfiling)
+                .HasConstraintName("fk_tb_tr_profilings_tb_m_employees_employee_nik");
         });
 
         OnModelCreatingPartial(modelBuilder);

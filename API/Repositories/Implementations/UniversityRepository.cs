@@ -1,7 +1,6 @@
 using API.Data;
 using API.Models;
 using API.Repositories.Contracts;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories.Implementations;
 

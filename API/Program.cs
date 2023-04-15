@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 using API.Data;
+using API.Repositories.Contracts;
+using API.Repositories.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,9 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Tugas6Context>();
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
-    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull; // omit properties with null
+    options.JsonSerializerOptions.DefaultIgnoreCondition =
+        JsonIgnoreCondition.WhenWritingNull; // omit properties with null
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // ignore cardinality include cycle
 });
+builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

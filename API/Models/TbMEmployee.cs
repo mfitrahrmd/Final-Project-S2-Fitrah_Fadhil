@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +6,7 @@ namespace API.Models;
 
 [Table("TB_M_Employees")]
 [Index("Email", Name = "ix_tb_m_employees_email", IsUnique = true)]
-public partial class TbMEmployee
+public class TbMEmployee
 {
     [Key]
     [Column("nik")]
@@ -26,14 +24,11 @@ public partial class TbMEmployee
     [Unicode(false)]
     public string? LastName { get; set; }
 
-    [Column("birthdate")]
-    public DateTime Birthdate { get; set; }
+    [Column("birthdate")] public DateTime Birthdate { get; set; }
 
-    [Column("gender")]
-    public int Gender { get; set; }
+    [Column("gender")] public int Gender { get; set; }
 
-    [Column("hiring_date")]
-    public DateTime HiringDate { get; set; }
+    [Column("hiring_date")] public DateTime HiringDate { get; set; }
 
     [Column("email")]
     [StringLength(50)]
