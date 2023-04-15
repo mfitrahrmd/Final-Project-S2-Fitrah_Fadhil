@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using API.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Models;
 
 [Table("TB_M_Educations")]
 [Index("UniversityId", Name = "ix_tb_m_educations_university_id")]
-public class TbMEducation
+public class TbMEducation : IEntity<int>
 {
     [Key] [Column("id")] public int Id { get; set; }
 
@@ -30,4 +32,12 @@ public class TbMEducation
     [ForeignKey("UniversityId")]
     [InverseProperty("TbMEducations")]
     public virtual TbMUniversity University { get; set; } = null!;
+
+    [JsonIgnore]
+    [NotMapped]
+    public int Pk
+    {
+        get => Id;
+        set => Id = value;
+    }
 }
