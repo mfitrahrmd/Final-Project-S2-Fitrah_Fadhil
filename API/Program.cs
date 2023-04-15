@@ -13,7 +13,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
         JsonIgnoreCondition.WhenWritingNull; // omit properties with null
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // ignore cardinality include cycle
 });
-builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
+builder.Services.AddScoped<IUniversityRepository, UniversityRepository<Tugas6Context>>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
