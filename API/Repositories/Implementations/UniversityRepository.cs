@@ -1,12 +1,18 @@
 using API.Data;
 using API.Models;
 using API.Repositories.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories.Implementations;
 
-public class UniversityRepository : CoreRepository<int, TbMUniversity, Tugas6Context>, IUniversityRepository
+public class UniversityRepository<TContext> : CoreRepository<int, TbMUniversity, TContext>, IUniversityRepository where TContext : DbContext
 {
-    public UniversityRepository(Tugas6Context context) : base(context)
+    public UniversityRepository(TContext context) : base(context)
     {
+    }
+
+    public async Task<IEnumerable<TbMUniversity>> FindManyContainsName(string name)
+    {
+        return _context.Set<TbMUniversity>().Where(u => u.Name.Contains(name));
     }
 }
