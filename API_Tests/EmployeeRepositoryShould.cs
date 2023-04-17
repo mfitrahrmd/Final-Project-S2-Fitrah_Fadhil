@@ -20,7 +20,7 @@ public class EmployeeRepositoryShould : API_Tests
     {
         var insertedEmployee = await _employeeRepository.InsertOne(new TbMEmployee
         {
-            Nik = "00001",
+            Nik = "10000",
             FirstName = "Fitrah",
             LastName = "Ramadhan",
             Birthdate = new DateTime(1999, 12, 26),

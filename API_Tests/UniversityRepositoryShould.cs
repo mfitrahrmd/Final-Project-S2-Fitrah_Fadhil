@@ -19,15 +19,15 @@ public class UniversityRepositoryShould : API_Tests
     {
         _universityRepository.InsertOne(new TbMUniversity
         {
-            Name = "University of Sriwijaya"
+            Name = "University of Cambridge"
         });
         _universityRepository.InsertOne(new TbMUniversity
         {
-            Name = "University of Indonesia"
+            Name = "University of Toronto"
         });
         _universityRepository.InsertOne(new TbMUniversity
         {
-            Name = "State Polytechnic of Sriwijaya"
+            Name = "State Polytechnic of Cambridge"
         });
 
         var testCases = new List<TestCase>(new []
@@ -35,7 +35,7 @@ public class UniversityRepositoryShould : API_Tests
             new  TestCase
             {
                 Name = "Find universities contain existing name",
-                UniversityName = "Sriwijaya",
+                UniversityName = "Cambridge",
                 Result = u =>
                 {
                     Assert.AreEqual(2, u.Count());

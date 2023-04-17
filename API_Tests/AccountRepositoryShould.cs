@@ -19,7 +19,7 @@ public class AccountRepositoryShould : API_Tests
     [TestMethod]
     public async Task Login_Should_Logged_In_User_With_Given_Email_And_Password()
     {
-        var registered = await Register_User("10000", "test@gmail.com");
+        var registered = await Register_User("00001", "00001@gmail.com");
         
         Assert.IsNotNull(registered);
         
@@ -38,44 +38,7 @@ public class AccountRepositoryShould : API_Tests
     [TestMethod]
     public async Task Register_Should_Registered_User()
     {
-        var registered = await _accountRepository.RegisterAsync(new TbMEmployee
-        {
-            Nik = "0001",
-            FirstName = "Fitrah",
-            LastName = "Ramadhan",
-            Gender = 0,
-            Birthdate = new DateTime(1999, 12, 26),
-            Email = "fitrah@gmail.com",
-            PhoneNumber = "111",
-            HiringDate = DateTime.Now,
-            TbMAccount = new TbMAccount
-            {
-                Password = "secret",
-                TbTrAccountRoles = new List<TbTrAccountRole>(new []
-                {
-                    new TbTrAccountRole
-                    {
-                        Role = new TbMRole
-                        {
-                            Name = "Admin"
-                        }
-                    }
-                })
-            },
-            TbTrProfiling = new TbTrProfiling
-            {
-                Education = new TbMEducation
-                {
-                    Major = "Computer Science",
-                    Degree = "Bachelor",
-                    Gpa = 3.25m,
-                    University = new TbMUniversity
-                    {
-                        Name = "State Polytechnic of Sriwijaya"
-                    }
-                }
-            }
-        });
+        var registered = await Register_User("00002", "00002@gmail.com");
         
         Assert.IsNotNull(registered);
     }
@@ -85,26 +48,16 @@ public class AccountRepositoryShould : API_Tests
         var registered = await _accountRepository.RegisterAsync(new TbMEmployee
         {
             Nik = nik,
-            FirstName = "Fitrah",
-            LastName = "Ramadhan",
+            FirstName = "test",
+            LastName = "test",
             Gender = 0,
-            Birthdate = new DateTime(1999, 12, 26),
+            Birthdate = new DateTime(2000, 1, 1),
             Email = email,
-            PhoneNumber = "111",
+            PhoneNumber = "000",
             HiringDate = DateTime.Now,
             TbMAccount = new TbMAccount
             {
-                Password = "secret",
-                TbTrAccountRoles = new List<TbTrAccountRole>(new []
-                {
-                    new TbTrAccountRole
-                    {
-                        Role = new TbMRole
-                        {
-                            Name = "Admin"
-                        }
-                    }
-                })
+                Password = "secret"
             },
             TbTrProfiling = new TbTrProfiling
             {
@@ -112,10 +65,10 @@ public class AccountRepositoryShould : API_Tests
                 {
                     Major = "Computer Science",
                     Degree = "Bachelor",
-                    Gpa = 3.25m,
+                    Gpa = 3.5m,
                     University = new TbMUniversity
                     {
-                        Name = "State Polytechnic of Sriwijaya"
+                        Name = "University of Test"
                     }
                 }
             }
