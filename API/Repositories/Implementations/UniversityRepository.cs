@@ -13,6 +13,6 @@ public class UniversityRepository<TContext> : CoreRepository<int, TbMUniversity,
 
     public async Task<IEnumerable<TbMUniversity>> FindManyContainsName(string name)
     {
-        return _context.Set<TbMUniversity>().Where(u => u.Name.Contains(name));
+        return _dbSet.Where(u => u.Name.Contains(name));
     }
 }

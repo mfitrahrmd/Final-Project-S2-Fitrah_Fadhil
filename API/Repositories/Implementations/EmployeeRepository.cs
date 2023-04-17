@@ -13,6 +13,6 @@ public class EmployeeRepository<TContext> : CoreRepository<string, TbMEmployee, 
 
     public async Task<TbMEmployee?> FindOneByEmail(string email)
     {
-        return await _context.Set<TbMEmployee>().FirstOrDefaultAsync(e => e.Email.Equals(email));
+        return await _dbSet.FirstOrDefaultAsync(e => e.Email.Equals(email));
     }
 }

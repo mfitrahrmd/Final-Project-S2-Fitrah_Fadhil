@@ -6,11 +6,13 @@ public abstract class CoreRepository<TPk, TEntity, TContext> : IBaseRepository<T
     where TEntity : class, IEntity<TPk>
     where TContext : DbContext
 {
-    protected readonly TContext _context;
+    private readonly TContext _context;
+    protected readonly DbSet<TEntity> _dbSet;
 
     protected CoreRepository(TContext context)
     {
         _context = context;
+        _dbSet = context.Set<TEntity>();
     }
 
     public async Task<TEntity?> InsertOne(TEntity entity)
