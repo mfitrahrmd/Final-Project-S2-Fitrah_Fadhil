@@ -16,6 +16,7 @@ public abstract class API_Tests
         serviceCollection.AddTransient<CoreRepository<int, Entity, InMemoryTugas6Context>, CoreRepositoryImpl<int, Entity, InMemoryTugas6Context>>();
         serviceCollection.AddTransient<IUniversityRepository, UniversityRepository<InMemoryTugas6Context>>();
         serviceCollection.AddTransient<IEmployeeRepository, EmployeeRepository<InMemoryTugas6Context>>();
+        serviceCollection.AddTransient<IAccountRepository, AccountRepository<InMemoryTugas6Context>>();
 
         _service = serviceCollection.BuildServiceProvider();
     }
