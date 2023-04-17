@@ -14,9 +14,9 @@ public class AccountRepository<TContext> : CoreRepository<string, TbMAccount, TC
         _employeeRepository = employeeRepository;
     }
 
-    public async Task<TbMEmployee> RegisterAsync(TbMEmployee employee)
+    public async Task<TbMEmployee?> RegisterAsync(TbMEmployee employee)
     {
-        TbMEmployee registeredAccount;
+        TbMEmployee? registeredAccount;
         try
         {
             registeredAccount = await _employeeRepository.InsertOne(employee);
@@ -29,7 +29,7 @@ public class AccountRepository<TContext> : CoreRepository<string, TbMAccount, TC
         return registeredAccount;
     }
 
-    public async Task<TbMEmployee> LoginAsync(TbMEmployee employee)
+    public async Task<TbMEmployee?> LoginAsync(TbMEmployee employee)
     {
         var foundEmployee = await _employeeRepository.FindOneByEmailAsync(employee.Email);
 
