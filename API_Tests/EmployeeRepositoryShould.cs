@@ -58,7 +58,7 @@ public class EmployeeRepositoryShould : API_Tests
         
         testCases.ForEach(async tc =>
         {
-            var foundEmployee = await _employeeRepository.FindOneByEmail(tc.EmployeeEmail);
+            var foundEmployee = await _employeeRepository.FindOneByEmailAsync(tc.EmployeeEmail);
 
             tc.Result(foundEmployee);
         });

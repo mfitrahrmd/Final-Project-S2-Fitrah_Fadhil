@@ -54,7 +54,7 @@ public class UniversityRepositoryShould : API_Tests
         
         testCases.ForEach(async tc =>
         {
-            var foundUniversities = await _universityRepository.FindManyContainsName(tc.UniversityName);
+            var foundUniversities = await _universityRepository.FindManyContainsNameAsync(tc.UniversityName);
 
             tc.Result(foundUniversities);
         });
