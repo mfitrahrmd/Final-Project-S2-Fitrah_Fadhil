@@ -2,11 +2,15 @@ using System.Text.Json.Serialization;
 using API.Data;
 using API.Repositories.Contracts;
 using API.Repositories.Implementations;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<Tugas6Context>();
+builder.Services.AddDbContext<Tugas6Context>((DbContextOptionsBuilder optionsBuilder) =>
+{
+    optionsBuilder.UseLazyLoadingProxies();
+});
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.DefaultIgnoreCondition =
