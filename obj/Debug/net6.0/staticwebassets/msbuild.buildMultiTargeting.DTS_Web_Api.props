@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\DTS_Web_Api.props" />
+</Project>

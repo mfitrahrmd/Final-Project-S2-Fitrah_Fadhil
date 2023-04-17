@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "kNQyRJqv4Oeb5b4bDkVzayqOXgzu8EmEGmSMugsMTy0=",
+  "Source": "DTS_Web_Api",
+  "BasePath": "_content/DTS_Web_Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
