@@ -28,4 +28,17 @@ public class AccountRepository<TContext> : CoreRepository<string, TbMAccount, TC
 
         return registeredAccount;
     }
+
+    public async Task<TbMEmployee> LoginAsync(TbMEmployee employee)
+    {
+        var foundEmployee = await _employeeRepository.FindOneByEmailAsync(employee.Email);
+
+        if (foundEmployee is null)
+            return null;
+
+        if (!foundEmployee.TbMAccount.Password.Equals(employee.TbMAccount.Password))
+            return null;
+
+        return foundEmployee;
+    }
 }
