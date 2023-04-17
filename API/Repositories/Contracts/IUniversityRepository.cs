@@ -4,5 +4,5 @@ namespace API.Repositories.Contracts;
 
 public interface IUniversityRepository : IBaseRepository<int, TbMUniversity>
 {
-    Task<IEnumerable<TbMUniversity>> FindManyContainsName(string name);
+    Task<IEnumerable<TbMUniversity>> FindManyContainsNameAsync(string name);
 }

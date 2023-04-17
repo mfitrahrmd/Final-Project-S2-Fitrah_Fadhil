@@ -11,7 +11,7 @@ public class UniversityRepository<TContext> : CoreRepository<int, TbMUniversity,
     {
     }
 
-    public async Task<IEnumerable<TbMUniversity>> FindManyContainsName(string name)
+    public async Task<IEnumerable<TbMUniversity>> FindManyContainsNameAsync(string name)
     {
         return _dbSet.Where(u => u.Name.Contains(name));
     }
