@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System.Text.Json.Serialization;
 using API.Data;
 using API.Repositories.Contracts;
@@ -35,6 +36,15 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseExceptionHandler(applicationBuilder =>
+    {
+        applicationBuilder.Run(async context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            context.Response.ContentType = MediaTypeNames.Application.Json;
+            await context.Response.WriteAsync("{\"message\":\"unexpected server error\"}");
+        });
+    });
     app.UseSwagger();
     app.UseSwaggerUI();
 }
