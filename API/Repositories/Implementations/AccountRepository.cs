@@ -72,7 +72,12 @@ public class AccountRepository<TContext> : CoreRepository<string, TbMAccount, TC
         if (foundEmployee is null)
             return null;
 
-        if (!foundEmployee.TbMAccount.Password.Equals(employee.TbMAccount.Password))
+        var foundAccount = await FindOneByPk(foundEmployee.Nik);
+
+        if (foundAccount is null)
+            return null;
+
+        if (!foundAccount.Password.Equals(employee.TbMAccount.Password))
             return null;
 
         return foundEmployee;
