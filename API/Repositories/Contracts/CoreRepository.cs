@@ -30,7 +30,7 @@ public abstract class CoreRepository<TPk, TEntity, TContext> : IBaseRepository<T
     
     public async Task<IEnumerable<TEntity>> FindAll(int limit, int offset)
     {
-        return _context.Set<TEntity>().Skip(offset).Take(limit);
+        return _context.Set<TEntity>().Skip(offset).Take(limit).ToList();
     }
 
     public async Task<TEntity?> FindOneByPk(TPk pk)
@@ -43,7 +43,7 @@ public abstract class CoreRepository<TPk, TEntity, TContext> : IBaseRepository<T
         var foundEntity = FindOneByPkAsNoTracking(pk);
 
         if (foundEntity is null)
-            return foundEntity;
+            return null;
 
         _context.Set<TEntity>().Remove(foundEntity);
 
