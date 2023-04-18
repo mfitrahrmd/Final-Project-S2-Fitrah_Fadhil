@@ -11,10 +11,10 @@ namespace API.Models;
 [Index("Email", Name = "ix_tb_m_employees_email", IsUnique = true)]
 public class TbMEmployee : IEntity<string>
 {
-    [Key]
     [Column("nik")]
     [StringLength(5)]
     [Unicode(false)]
+    [Key]
     public string Nik { get; set; } = null!;
 
     [Column("first_name")]
@@ -27,11 +27,14 @@ public class TbMEmployee : IEntity<string>
     [Unicode(false)]
     public string? LastName { get; set; }
 
-    [Column("birthdate")] public DateTime Birthdate { get; set; }
+    [Column("birthdate")]
+    public DateTime Birthdate { get; set; }
 
-    [Column("gender")] public Gender Gender { get; set; }
+    [Column("gender")]
+    public Gender Gender { get; set; }
 
-    [Column("hiring_date")] public DateTime HiringDate { get; set; }
+    [Column("hiring_date")]
+    public DateTime HiringDate { get; set; }
 
     [Column("email")]
     [StringLength(50)]
@@ -43,9 +46,11 @@ public class TbMEmployee : IEntity<string>
     [Unicode(false)]
     public string? PhoneNumber { get; set; }
 
+    [JsonIgnore]
     [InverseProperty("EmployeeNikNavigation")]
     public virtual TbMAccount? TbMAccount { get; set; }
 
+    [JsonIgnore]
     [InverseProperty("EmployeeNikNavigation")]
     public virtual TbTrProfiling? TbTrProfiling { get; set; }
     

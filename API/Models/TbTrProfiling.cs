@@ -10,18 +10,21 @@ namespace API.Models;
 [Index("EducationId", Name = "ix_tb_tr_profilings_education_id", IsUnique = true)]
 public class TbTrProfiling : IEntity<string>
 {
-    [Key]
     [Column("employee_nik")]
     [StringLength(5)]
     [Unicode(false)]
+    [Key]
     public string EmployeeNik { get; set; } = null!;
 
-    [Column("education_id")] public int EducationId { get; set; }
+    [Column("education_id")]
+    public int EducationId { get; set; }
 
+    [JsonIgnore]
     [ForeignKey("EducationId")]
     [InverseProperty("TbTrProfiling")]
     public virtual TbMEducation Education { get; set; } = null!;
 
+    [JsonIgnore]
     [ForeignKey("EmployeeNik")]
     [InverseProperty("TbTrProfiling")]
     public virtual TbMEmployee EmployeeNikNavigation { get; set; } = null!;

@@ -10,7 +10,9 @@ namespace API.Models;
 [Index("UniversityId", Name = "ix_tb_m_educations_university_id")]
 public class TbMEducation : IEntity<int>
 {
-    [Key] [Column("id")] public int Id { get; set; }
+    [Column("id")]
+    [Key]
+    public int Id { get; set; }
 
     [Column("major")]
     [StringLength(100)]
@@ -25,10 +27,14 @@ public class TbMEducation : IEntity<int>
     [Column("gpa", TypeName = "decimal(3, 2)")]
     public decimal Gpa { get; set; }
 
-    [Column("university_id")] public int UniversityId { get; set; }
+    [Column("university_id")]
+    public int UniversityId { get; set; }
 
-    [InverseProperty("Education")] public virtual TbTrProfiling? TbTrProfiling { get; set; }
+    [JsonIgnore]
+    [InverseProperty("Education")]
+    public virtual TbTrProfiling? TbTrProfiling { get; set; }
 
+    [JsonIgnore]
     [ForeignKey("UniversityId")]
     [InverseProperty("TbMEducations")]
     public virtual TbMUniversity University { get; set; } = null!;

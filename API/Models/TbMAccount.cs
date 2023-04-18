@@ -9,10 +9,10 @@ namespace API.Models;
 [Table("TB_M_Accounts")]
 public class TbMAccount : IEntity<string>
 {
-    [Key]
     [Column("employee_nik")]
     [StringLength(5)]
     [Unicode(false)]
+    [Key]
     public string EmployeeNik { get; set; } = null!;
 
     [Column("password")]
@@ -20,10 +20,12 @@ public class TbMAccount : IEntity<string>
     [Unicode(false)]
     public string Password { get; set; } = null!;
 
+    [JsonIgnore]
     [ForeignKey("EmployeeNik")]
     [InverseProperty("TbMAccount")]
     public virtual TbMEmployee EmployeeNikNavigation { get; set; } = null!;
 
+    [JsonIgnore]
     [InverseProperty("AccountNikNavigation")]
     public virtual ICollection<TbTrAccountRole> TbTrAccountRoles { get; set; } = new List<TbTrAccountRole>();
 

@@ -11,19 +11,24 @@ namespace API.Models;
 [Index("RoleId", Name = "ix_tb_tr_account_roles_role_id")]
 public class TbTrAccountRole : IEntity<int>
 {
-    [Key] [Column("id")] public int Id { get; set; }
+    [Column("id")]
+    [Key]
+    public int Id { get; set; }
 
     [Column("account_nik")]
     [StringLength(5)]
     [Unicode(false)]
     public string AccountNik { get; set; } = null!;
 
-    [Column("role_id")] public int RoleId { get; set; }
+    [Column("role_id")]
+    public int RoleId { get; set; }
 
+    [JsonIgnore]
     [ForeignKey("AccountNik")]
     [InverseProperty("TbTrAccountRoles")]
     public virtual TbMAccount AccountNikNavigation { get; set; } = null!;
 
+    [JsonIgnore]
     [ForeignKey("RoleId")]
     [InverseProperty("TbTrAccountRoles")]
     public virtual TbMRole Role { get; set; } = null!;
