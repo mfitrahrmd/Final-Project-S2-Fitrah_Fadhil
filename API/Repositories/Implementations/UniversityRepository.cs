@@ -15,4 +15,11 @@ public class UniversityRepository<TContext> : CoreRepository<int, TbMUniversity,
     {
         return _dbSet.Where(u => u.Name.Contains(name));
     }
+
+    public Task<TbMUniversity?> FindOneByNameAsync(string name)
+    {
+        var foundUniversity = _dbSet.AsNoTrackingWithIdentityResolution().FirstOrDefaultAsync(u => u.Name.Equals(name));
+
+        return foundUniversity;
+    }
 }
