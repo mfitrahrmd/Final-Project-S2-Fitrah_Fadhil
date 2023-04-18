@@ -12,12 +12,12 @@ namespace API.Controllers;
 public class AccountController : Controller
 {
     private readonly IAccountRepository _accountRepository;
-    private readonly Jwt _jwtUtil;
+    private readonly BcryptUtil _bcryptUtil;
+    private readonly JwtUtil _jwtUtil;
 
-    public AccountController(IAccountRepository accountRepository, Jwt jwtUtil)
+    public AccountController(IAccountRepository accountRepository, BcryptUtil bcryptUtil, JwtUtil jwtUtil)
     {
-        _accountRepository = accountRepository;
-        _jwtUtil = jwtUtil;
+        (_accountRepository, _bcryptUtil, _jwtUtil) = (accountRepository, bcryptUtil, jwtUtil);
     }
 
     [Route("Register")]
@@ -27,6 +27,8 @@ public class AccountController : Controller
         TbMEmployee? registered = null;
         try
         {
+            data.Password = _bcryptUtil.HashPassword(data.Password);
+            
             registered = await _accountRepository.RegisterAsync(data.ToEmployeeEntity());
 
             if (registered is null)

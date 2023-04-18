@@ -12,10 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<Tugas6Context>((DbContextOptionsBuilder optionsBuilder) =>
-{
-    optionsBuilder.UseLazyLoadingProxies();
-});
+builder.Services.AddDbContext<Tugas6Context>();
 builder.Services.AddScoped<IUniversityRepository, UniversityRepository<Tugas6Context>>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository<Tugas6Context>>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository<Tugas6Context>>();
@@ -23,7 +20,8 @@ builder.Services.AddScoped<IEducationRepository, EducationRepository<Tugas6Conte
 builder.Services.AddScoped<IProfilingRepository, ProfilingRepository<Tugas6Context>>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository<Tugas6Context>>();
 builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository<Tugas6Context>>();
-builder.Services.AddSingleton<Jwt>();
+builder.Services.AddSingleton<JwtUtil>();
+builder.Services.AddSingleton<BcryptUtil>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -39,6 +37,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -47,7 +47,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["jwt:Issuer"],
             ValidAudience = builder.Configuration["jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwt:Key"]))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwt:Key"])),
+            ClockSkew = TimeSpan.Zero
         };
     });
 
