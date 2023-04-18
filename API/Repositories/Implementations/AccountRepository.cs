@@ -1,3 +1,4 @@
+using API.Exceptions;
 using API.Models;
 using API.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,14 @@ public class AccountRepository<TContext> : CoreRepository<string, TbMAccount, TC
         TbMEmployee? registeredAccount;
         try
         {
+            var foundWithNik = await _employeeRepository.FindOneByPk(employee.Nik);
+            if (foundWithNik is not null)
+                throw new RepositoryException("Nik already exist");
+
+            var foundWithEmail = await _employeeRepository.FindOneByEmailAsync(employee.Email);
+            if (foundWithEmail is not null)
+                throw new RepositoryException("email already exist");
+            
             registeredAccount = await _employeeRepository.InsertOne(employee);
         }
         catch (Exception e)
