@@ -2,6 +2,7 @@ using API.DTOs;
 using API.Exceptions;
 using API.Models;
 using API.Repositories.Contracts;
+using API.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -11,10 +12,12 @@ namespace API.Controllers;
 public class AccountController : Controller
 {
     private readonly IAccountRepository _accountRepository;
+    private readonly Jwt _jwtUtil;
 
-    public AccountController(IAccountRepository accountRepository)
+    public AccountController(IAccountRepository accountRepository, Jwt jwtUtil)
     {
         _accountRepository = accountRepository;
+        _jwtUtil = jwtUtil;
     }
 
     [Route("Register")]
@@ -48,9 +51,11 @@ public class AccountController : Controller
         if (loggedIn is null)
             return BadRequest();
 
+        var accessToken = _jwtUtil.GenerateToken(new Payload($"{loggedIn.FirstName} {loggedIn.LastName}", loggedIn.Email, "User"));
+
         return Ok(new LoginOutput
         {
-            Email = loggedIn.Email
+            AccessToken = accessToken
         });
     }
 }

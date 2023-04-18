@@ -2,5 +2,5 @@ namespace API.DTOs;
 
 public class LoginOutput
 {
-    public string Email { get; set; }
+    public string AccessToken { get; set; }
 }
