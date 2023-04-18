@@ -31,7 +31,6 @@ public class AccountController : Controller
         }
         catch (RepositoryException e)
         {
-            Console.WriteLine(e.Message);
             return BadRequest();
         }
         return Created("", new RegisterOutput
