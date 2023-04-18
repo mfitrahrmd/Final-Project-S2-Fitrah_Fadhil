@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using API.Annotations;
 using API.Models;
 
 namespace API.DTOs;
 
 public class RegisterInput
 {
+    [UniqueNik]
     [MinLength(1), MaxLength(5)]
     public string Nik { get; set; }
     [MinLength(1), MaxLength(50)]
@@ -14,9 +16,11 @@ public class RegisterInput
     [DataType(DataType.Date)]
     public DateTime Birthdate { get; set; }
     public int Gender { get; set; }
+    [UniqueEmail]
     [MaxLength(50)]
     [EmailAddress]
     public string Email { get; set; }
+    [UniquePhoneNumber]
     [MaxLength(20)]
     [Phone]
     public string? PhoneNumber { get; set; }
