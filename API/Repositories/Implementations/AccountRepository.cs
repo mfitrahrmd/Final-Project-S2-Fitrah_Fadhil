@@ -28,6 +28,10 @@ public class AccountRepository<TContext> : CoreRepository<string, TbMAccount, TC
             if (foundWithEmail is not null)
                 throw new RepositoryException("email already exist");
             
+            var foundWithPhoneNumber = await _employeeRepository.FindOneByPhoneNumberAsync(employee.PhoneNumber);
+            if (foundWithEmail is not null)
+                throw new RepositoryException("phone number already exist");
+            
             registeredAccount = await _employeeRepository.InsertOne(employee);
         }
         catch (Exception e)
