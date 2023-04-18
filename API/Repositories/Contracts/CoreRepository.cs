@@ -79,4 +79,23 @@ public abstract class CoreRepository<TPk, TEntity, TContext> : IBaseRepository<T
 
         return foundEntity;
     }
+
+    protected void WithTx(Action action)
+    {
+        var tx = _context.Database.BeginTransaction();
+
+        try
+        {
+            action();
+
+            _context.SaveChanges();
+            
+            tx.Commit();
+        }
+        catch (Exception e)
+        {
+            tx.Rollback();
+            throw;
+        }
+    }
 }
