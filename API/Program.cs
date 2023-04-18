@@ -12,12 +12,6 @@ builder.Services.AddDbContext<Tugas6Context>((DbContextOptionsBuilder optionsBui
 {
     optionsBuilder.UseLazyLoadingProxies();
 });
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.DefaultIgnoreCondition =
-        JsonIgnoreCondition.WhenWritingNull; // omit properties with null
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // ignore cardinality include cycle
-});
 builder.Services.AddScoped<IUniversityRepository, UniversityRepository<Tugas6Context>>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository<Tugas6Context>>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository<Tugas6Context>>();
@@ -26,7 +20,12 @@ builder.Services.AddScoped<IProfilingRepository, ProfilingRepository<Tugas6Conte
 builder.Services.AddScoped<IAccountRepository, AccountRepository<Tugas6Context>>();
 builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository<Tugas6Context>>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.DefaultIgnoreCondition =
+        JsonIgnoreCondition.WhenWritingNull; // omit properties with null
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // ignore cardinality include cycle
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
