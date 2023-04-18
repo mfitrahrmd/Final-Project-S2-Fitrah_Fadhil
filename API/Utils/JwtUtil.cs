@@ -7,11 +7,11 @@ namespace API.Utils;
 
 public record Payload(string FullName, string Email, string Role);
 
-public class Jwt
+public class JwtUtil
 {
     private readonly IConfiguration _config;
 
-    public Jwt(IConfiguration config)
+    public JwtUtil(IConfiguration config)
     {
         _config = config;
     }
