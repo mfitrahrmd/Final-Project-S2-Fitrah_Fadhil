@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using API.Extras;
 using API.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,7 +29,7 @@ public class TbMEmployee : IEntity<string>
 
     [Column("birthdate")] public DateTime Birthdate { get; set; }
 
-    [Column("gender")] public int Gender { get; set; }
+    [Column("gender")] public Gender Gender { get; set; }
 
     [Column("hiring_date")] public DateTime HiringDate { get; set; }
 

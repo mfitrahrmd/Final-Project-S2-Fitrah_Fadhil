@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using API.Annotations;
+using API.Extras;
 using API.Models;
 
 namespace API.DTOs;
@@ -15,7 +16,8 @@ public class RegisterInput
     public string? LastName { get; set; }
     [DataType(DataType.Date)]
     public DateTime Birthdate { get; set; }
-    public int Gender { get; set; }
+    [EnumDataType(typeof(Gender))]
+    public Gender Gender { get; set; }
     [UniqueEmail]
     [MaxLength(50)]
     [EmailAddress]
