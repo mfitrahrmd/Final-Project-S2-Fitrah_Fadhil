@@ -15,4 +15,9 @@ public class EmployeeRepository<TContext> : CoreRepository<string, TbMEmployee, 
     {
         return await _dbSet.FirstOrDefaultAsync(e => e.Email.Equals(email));
     }
+    
+    public async Task<TbMEmployee?> FindOneByPhoneNumberAsync(string phoneNumber)
+    {
+        return await _dbSet.FirstOrDefaultAsync(e => e.PhoneNumber.Equals(phoneNumber));
+    }
 }
