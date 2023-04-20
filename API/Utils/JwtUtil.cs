@@ -5,8 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace API.Utils;
 
-public record Payload(string FullName, string Email, string Role);
-
 public class JwtUtil
 {
     private readonly IConfiguration _config;
@@ -15,20 +13,24 @@ public class JwtUtil
     {
         _config = config;
     }
-    
-    public string GenerateToken(Payload payload)
+
+    public string GenerateAccessToken(IEnumerable<Claim> claims)
     {
         var key = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["jwt:Key"])),
             SecurityAlgorithms.HmacSha256);
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.Name, payload.FullName),
-            new Claim(ClaimTypes.Email, payload.Email),
-            new Claim(ClaimTypes.Role, payload.Role)
-        };
-        var token = new JwtSecurityToken(_config["jwt:Issuer"], _config["jwt:Audience"], claims,
-            DateTime.Now.AddMinutes(_config.GetValue<double>("jwt:ExpiresInMinute")), signingCredentials:key);
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        var tokenOptions = new JwtSecurityToken(
+            issuer: _config["jwt:Issuer"],
+            audience: _config["jwt:Audience"],
+            claims: claims,
+            expires: DateTime.Now.AddMinutes(_config.GetValue<double>("jwt:ExpiresInMinute")),
+            signingCredentials: key);
+
+        return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+    }
+
+    public string GenerateToken(params Claim[] claims)
+    {
+        return GenerateAccessToken(claims.AsEnumerable());
     }
 }
