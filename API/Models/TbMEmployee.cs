@@ -61,4 +61,8 @@ public class TbMEmployee : IEntity<string>
         get => Nik;
         set => Nik = value;
     }
+
+    [JsonIgnore]
+    [NotMapped]
+    public string Fullname => $"{FirstName} {LastName}";
 }
