@@ -22,4 +22,27 @@ public class UniversityRepository<TContext> : CoreRepository<int, TbMUniversity,
 
         return foundUniversity;
     }
+    
+    public async Task<TbMUniversity> FindOneOrInsertByName(string name)
+    {
+        var foundUniversity = await _dbSet.FirstOrDefaultAsync(u => u.Name.Equals(name));
+
+        var insertedUniversity = new TbMUniversity()
+        {
+            Name = name
+        };
+
+        if (foundUniversity is null)
+        {
+            WithTx(() =>
+            {
+                _dbSet.Add(insertedUniversity);
+            });
+
+            return insertedUniversity;
+        }
+
+        return foundUniversity;
+    }
+
 }

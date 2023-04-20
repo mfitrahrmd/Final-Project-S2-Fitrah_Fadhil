@@ -6,4 +6,5 @@ public interface IUniversityRepository : IBaseRepository<int, TbMUniversity>
 {
     Task<IEnumerable<TbMUniversity>> FindManyContainsNameAsync(string name);
     Task<TbMUniversity?> FindOneByNameAsync(string name);
+    Task<TbMUniversity> FindOneOrInsertByName(string name);
 }
