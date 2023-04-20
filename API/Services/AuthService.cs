@@ -61,6 +61,7 @@ public class AuthService
         });
 
         account.HiringDate = DateTime.Now;
+        account.TbMAccount.Password = _bcryptUtil.HashPassword(account.TbMAccount.Password);
 
         var registeredAccount = await _employeeRepository.InsertOne(account);
         if (registeredAccount is not null)
@@ -78,7 +79,7 @@ public class AuthService
     {
         var foundEmployee = await _employeeRepository.FindOneByEmailAsync(request.Email);
         if (foundEmployee is null)
-            throw new ApiException($"Email '{request.Email}' is not found.");
+            throw new ApiException($"Email '{request.Email}' is not found.") { Code = (int)HttpStatusCode.NotFound };
 
         var foundAccount = await _accountRepository.FindOneByPk(foundEmployee.Nik);
         if (foundAccount is null)
@@ -86,7 +87,7 @@ public class AuthService
 
         var isMatch = _bcryptUtil.VerifyPassword(request.Password, foundAccount.Password);
         if (!isMatch)
-            throw new ApiException($"Password does not match.");
+            throw new ApiException($"Password does not match.") { Code = (int)HttpStatusCode.BadRequest };
 
         var foundAccountRoles =
             await _accountRoleRepository.FindManyByAccountNikIncludeRoleAsync(foundAccount.EmployeeNik);
