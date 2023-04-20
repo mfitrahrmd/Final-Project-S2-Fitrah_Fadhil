@@ -2,11 +2,12 @@ using System.Net.Mime;
 using System.Text;
 using System.Text.Json.Serialization;
 using API.Data;
+using API.Extensions.Filters;
 using API.Repositories.Contracts;
 using API.Repositories.Implementations;
+using API.Services;
 using API.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,14 +23,24 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository<Tugas6Context>>
 builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository<Tugas6Context>>();
 builder.Services.AddSingleton<JwtUtil>();
 builder.Services.AddSingleton<BcryptUtil>();
+builder.Services.AddScoped<AuthService>();
 
-builder.Services.AddControllers().AddJsonOptions(options =>
+builder.Services.AddControllers(options =>
 {
-    options.JsonSerializerOptions.DefaultIgnoreCondition =
-        JsonIgnoreCondition.WhenWritingNull; // omit properties with null
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // ignore cardinality include cycle
-    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-});
+    options.Filters.Add<CustomExceptionFilterAttribute>();
+    options.Filters.Add<CustomActionFilterAttribute>();
+}).ConfigureApiBehaviorOptions(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+}).AddJsonOptions(
+    options =>
+    {
+        options.JsonSerializerOptions.DefaultIgnoreCondition =
+            JsonIgnoreCondition.WhenWritingNull; // omit properties with null
+        options.JsonSerializerOptions.ReferenceHandler =
+            ReferenceHandler.IgnoreCycles; // ignore cardinality include cycle
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -73,8 +84,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
-
-app.UseAuthorization();
 
 app.UseAuthorization();
 
