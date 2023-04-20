@@ -10,4 +10,9 @@ public class AccountRoleRepository<TContext> : CoreRepository<int, TbTrAccountRo
     public AccountRoleRepository(TContext context) : base(context)
     {
     }
+
+    public async Task<IEnumerable<TbTrAccountRole>> FindManyByAccountNikIncludeRoleAsync(string accountNik)
+    {
+        return _dbSet.Include(ar => ar.Role).Where(ar => ar.AccountNik.Equals(accountNik));
+    }
 }
