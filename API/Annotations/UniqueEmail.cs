@@ -13,7 +13,7 @@ public class UniqueEmail : ValidationAttribute
 
         if (foundEmployee is not null)
         {
-            return new ValidationResult($"email '{value}' is already in use");
+            return new ValidationResult($"Email '{value}' is already taken.");
         }
         
         return ValidationResult.Success;

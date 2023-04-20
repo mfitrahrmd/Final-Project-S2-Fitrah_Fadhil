@@ -13,7 +13,7 @@ public class UniqueNik : ValidationAttribute
 
         if (foundEmployee is not null)
         {
-            return new ValidationResult($"nik '{value}' is already in use");
+            return new ValidationResult($"Nik '{value}' is already taken.");
         }
         
         return ValidationResult.Success;

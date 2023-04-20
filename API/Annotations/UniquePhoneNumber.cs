@@ -13,7 +13,7 @@ public class UniquePhoneNumber : ValidationAttribute
 
         if (foundEmployee is not null)
         {
-            return new ValidationResult($"phone number '{value}' is already in use");
+            return new ValidationResult($"Phone Number '{value}' is already taken.");
         }
         
         return ValidationResult.Success;
