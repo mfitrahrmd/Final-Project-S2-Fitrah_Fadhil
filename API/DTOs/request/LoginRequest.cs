@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using API.Models;
 
-namespace API.DTOs;
+namespace API.DTOs.request;
 
-public class LoginInput
+public class LoginRequest
 {
     [EmailAddress]
     public string Email { get; set; }

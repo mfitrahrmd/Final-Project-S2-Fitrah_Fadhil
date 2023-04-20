@@ -3,9 +3,9 @@ using API.Annotations;
 using API.Extras;
 using API.Models;
 
-namespace API.DTOs;
+namespace API.DTOs.request;
 
-public class RegisterInput
+public class RegisterRequest
 {
     [UniqueNik]
     [MinLength(1), MaxLength(5)]
