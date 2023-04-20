@@ -1,8 +1,6 @@
-using API.DTOs;
-using API.Exceptions;
-using API.Models;
-using API.Repositories.Contracts;
-using API.Utils;
+using System.Net;
+using API.DTOs.request;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -11,53 +9,28 @@ namespace API.Controllers;
 [Route("[controller]")]
 public class AccountController : Controller
 {
-    private readonly IAccountRepository _accountRepository;
-    private readonly BcryptUtil _bcryptUtil;
-    private readonly JwtUtil _jwtUtil;
+    private readonly AuthService _authService;
 
-    public AccountController(IAccountRepository accountRepository, BcryptUtil bcryptUtil, JwtUtil jwtUtil)
+    public AccountController(AuthService authService)
     {
-        (_accountRepository, _bcryptUtil, _jwtUtil) = (accountRepository, bcryptUtil, jwtUtil);
+        _authService = authService;
     }
 
     [Route("Register")]
     [HttpPost]
-    public async Task<IActionResult> Register(RegisterInput data)
+    public async Task<IActionResult> Register(RegisterRequest request)
     {
-        TbMEmployee? registered = null;
-        try
-        {
-            data.Password = _bcryptUtil.HashPassword(data.Password);
-            
-            registered = await _accountRepository.RegisterAsync(data.ToEmployeeEntity());
+        var result = await _authService.RegisterAsync(request);
 
-            if (registered is null)
-                return BadRequest();
-        }
-        catch (RepositoryException e)
-        {
-            return BadRequest();
-        }
-        return Created("", new RegisterOutput
-        {
-            Email = registered.Email
-        });
+        return StatusCode((int)HttpStatusCode.Created, result);
     }
 
     [Route("Login")]
     [HttpPost]
-    public async Task<IActionResult> Login(LoginInput data)
+    public async Task<IActionResult> Login(LoginRequest request)
     {
-        var loggedIn = await _accountRepository.LoginAsync(data.ToEmployeeEntity());
+        var result = await _authService.LoginAsync(request);
 
-        if (loggedIn is null)
-            return BadRequest();
-
-        var accessToken = _jwtUtil.GenerateToken(new Payload($"{loggedIn.FirstName} {loggedIn.LastName}", loggedIn.Email, "User"));
-
-        return Ok(new LoginOutput
-        {
-            AccessToken = accessToken
-        });
+        return StatusCode((int)HttpStatusCode.OK, result);
     }
 }
