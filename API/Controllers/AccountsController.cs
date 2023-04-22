@@ -9,11 +9,11 @@ namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AccountController : CoreController<IAccountRepository, string, TbMAccount>
+public class AccountsController : CoreController<IAccountRepository, string, TbMAccount>
 {
     private readonly AuthService _authService;
 
-    public AccountController(IAccountRepository accountRepository, AuthService authService) : base(accountRepository)
+    public AccountsController(IAccountRepository accountRepository, AuthService authService) : base(accountRepository)
     {
         _authService = authService;
     }

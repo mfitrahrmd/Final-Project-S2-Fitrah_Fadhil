@@ -6,9 +6,9 @@ namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RoleController : CoreController<IRoleRepository, int, TbMRole>
+public class RolesController : CoreController<IRoleRepository, int, TbMRole>
 {
-    public RoleController(IRoleRepository repository) : base(repository)
+    public RolesController(IRoleRepository repository) : base(repository)
     {
     }
 }
