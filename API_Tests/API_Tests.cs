@@ -1,6 +1,7 @@
 using API.Data;
 using API.Repositories.Contracts;
 using API.Repositories.Implementations;
+using API.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace API_Tests;
@@ -17,6 +18,7 @@ public abstract class API_Tests
         serviceCollection.AddTransient<IUniversityRepository, UniversityRepository<InMemoryTugas6Context>>();
         serviceCollection.AddTransient<IEmployeeRepository, EmployeeRepository<InMemoryTugas6Context>>();
         serviceCollection.AddTransient<IAccountRepository, AccountRepository<InMemoryTugas6Context>>();
+        serviceCollection.AddSingleton<JwtUtil>();
 
         _service = serviceCollection.BuildServiceProvider();
     }
