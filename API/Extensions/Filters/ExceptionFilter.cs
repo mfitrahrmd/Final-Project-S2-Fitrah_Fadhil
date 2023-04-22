@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace API.Extensions.Filters;
 
-public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
+public class ExceptionFilter : ExceptionFilterAttribute
 {
-    private readonly ILogger<CustomExceptionFilterAttribute> _logger;
+    private readonly ILogger<ExceptionFilter> _logger;
 
-    public CustomExceptionFilterAttribute(ILogger<CustomExceptionFilterAttribute> logger)
+    public ExceptionFilter(ILogger<ExceptionFilter> logger)
     {
         _logger = logger;
     }
 
-    public override void OnException(ExceptionContext context)
+    public override async Task OnExceptionAsync(ExceptionContext context)
     {
         if (context.ExceptionHandled)
             return;
@@ -36,7 +36,7 @@ public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
                 break;
             default:
                 _logger.LogError(
-                    $"{nameof(CustomExceptionFilterAttribute)} : Error in {context.ActionDescriptor.DisplayName}. {context.Exception.Message}. Stack Trace : {context.Exception.StackTrace}");
+                    $"{nameof(ExceptionFilter)} : Error in {context.ActionDescriptor.DisplayName}. {context.Exception.Message}. Stack Trace : {context.Exception.StackTrace}");
 
                 result.Value = new BaseResponse<object>
                 {
@@ -47,7 +47,12 @@ public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
                 result.StatusCode = (int)HttpStatusCode.InternalServerError;
                 break;
         }
+        
 
-        context.Result = result;
+        context.Result = new ObjectResult(new {})
+        {
+            Value = "nothing"
+        };
+
     }
 }

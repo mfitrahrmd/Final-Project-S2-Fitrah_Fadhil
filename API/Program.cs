@@ -27,8 +27,8 @@ builder.Services.AddScoped<AuthService>();
 
 builder.Services.AddControllers(options =>
 {
-    options.Filters.Add<CustomExceptionFilterAttribute>();
-    options.Filters.Add<CustomActionFilterAttribute>();
+    options.Filters.Add<ExceptionFilter>();
+    options.Filters.Add<ResultFilter>();
 }).ConfigureApiBehaviorOptions(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
