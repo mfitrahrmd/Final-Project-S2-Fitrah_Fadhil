@@ -63,6 +63,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
