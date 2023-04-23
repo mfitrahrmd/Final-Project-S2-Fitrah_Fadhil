@@ -59,4 +59,11 @@ public class EmployeeRepository<TContext> : CoreRepository<string, TbMEmployee, 
 
         return result;
     }
+
+    public async Task<IEnumerable<TbMEmployee>> FindByWorkPeriod()
+    {
+        var result = _dbSet.OrderBy(e => e.HiringDate);
+
+        return result;
+    }
 }

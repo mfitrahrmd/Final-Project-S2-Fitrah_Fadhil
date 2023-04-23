@@ -10,4 +10,5 @@ public interface IEmployeeRepository : IBaseRepository<string, TbMEmployee>
     Task<IEnumerable<TbMEmployee>> FindManyIncludeEducationAndUniversityAsync();
     Task<IEnumerable<TbMEmployee>> FindManyByAboveAvgGpaAndHiringYear(int year);
     Task<IEnumerable<EmployeesTotalGroupByMajorAndUniversityNameDAO>> FindTotalGroupByMajorAndUniversityName();
+    Task<IEnumerable<TbMEmployee>> FindByWorkPeriod();
 }
