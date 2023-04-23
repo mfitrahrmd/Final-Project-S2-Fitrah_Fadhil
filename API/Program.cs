@@ -9,7 +9,6 @@ using API.Repositories.Implementations;
 using API.Services;
 using API.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -41,6 +40,14 @@ builder.Services.AddControllers(options =>
             ReferenceHandler.IgnoreCycles; // ignore cardinality include cycle
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
+
+// Configure CORS
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(policy => {
+        policy.AllowAnyOrigin();
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+    }));
 
 builder.Services.AddAutoMapper(expression =>
 {
