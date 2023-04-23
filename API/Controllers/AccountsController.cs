@@ -3,6 +3,7 @@ using API.DTOs.request;
 using API.Models;
 using API.Repositories.Contracts;
 using API.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -13,7 +14,7 @@ public class AccountsController : CoreController<IAccountRepository, string, TbM
 {
     private readonly AuthService _authService;
 
-    public AccountsController(IAccountRepository accountRepository, AuthService authService) : base(accountRepository)
+    public AccountsController(IAccountRepository accountRepository, AuthService authService, IMapper mapper) : base(accountRepository, mapper)
     {
         _authService = authService;
     }

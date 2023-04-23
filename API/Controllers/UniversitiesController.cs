@@ -1,6 +1,6 @@
 using API.Models;
 using API.Repositories.Contracts;
-using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -9,7 +9,7 @@ namespace API.Controllers;
 [ApiController]
 public class UniversitiesController : CoreController<IUniversityRepository, int, TbMUniversity>
 {
-    public UniversitiesController(IUniversityRepository repository) : base(repository)
+    public UniversitiesController(IUniversityRepository repository, IMapper mapper) : base(repository, mapper)
     {
     }
 }

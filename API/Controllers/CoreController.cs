@@ -1,4 +1,5 @@
 using API.Repositories.Contracts;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -10,10 +11,12 @@ public class CoreController<TRepository, TPk, TEntity> : ControllerBase
     where TEntity : class, IEntity<TPk>
 {
     protected readonly TRepository _repository;
+    protected readonly IMapper _mapper;
 
-    public CoreController(TRepository repository)
+    public CoreController(TRepository repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
     }
 
     [HttpGet]

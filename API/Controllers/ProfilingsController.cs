@@ -1,5 +1,6 @@
 using API.Models;
 using API.Repositories.Contracts;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -8,7 +9,7 @@ namespace API.Controllers;
 [ApiController]
 public class ProfilingsController : CoreController<IProfilingRepository, string, TbTrProfiling>
 {
-    public ProfilingsController(IProfilingRepository repository) : base(repository)
+    public ProfilingsController(IProfilingRepository repository, IMapper mapper) : base(repository, mapper)
     {
     }
 }
