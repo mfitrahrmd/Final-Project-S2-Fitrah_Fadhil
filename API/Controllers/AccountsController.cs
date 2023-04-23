@@ -5,10 +5,12 @@ using API.Models;
 using API.Repositories.Contracts;
 using API.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+[Authorize(Roles = "admin")]
 [Route("api/[controller]")]
 [ApiController]
 public class AccountsController : CoreController<IAccountRepository, string, TbMAccount, AccountDTO, InsertAccountRequest, UpdateAccountRequest>
@@ -20,6 +22,7 @@ public class AccountsController : CoreController<IAccountRepository, string, TbM
         _authService = authService;
     }
 
+    [AllowAnonymous]
     [HttpPost("Register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {
@@ -28,6 +31,7 @@ public class AccountsController : CoreController<IAccountRepository, string, TbM
         return StatusCode((int)HttpStatusCode.Created, result);
     }
 
+    [AllowAnonymous]
     [HttpPost("Auth")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
