@@ -26,4 +26,12 @@ public class ProfilingsController : CoreController<IProfilingRepository, string,
 
         return Ok(_mapper.Map<IEnumerable<EmployeesAboveAvgGpaAndHiringYearResponse>>(employees));
     }
+
+    [HttpGet("totalbymajor")]
+    public async Task<IActionResult> Get()
+    {
+        var result = await _employeeRepository.FindTotalGroupByMajorAndUniversityName();
+
+        return Ok(result);
+    }
 }
