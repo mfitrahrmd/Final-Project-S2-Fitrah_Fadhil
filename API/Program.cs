@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using API.Data;
 using API.Extensions.Filters;
+using API.Profiles;
 using API.Repositories.Contracts;
 using API.Repositories.Implementations;
 using API.Services;
@@ -66,6 +67,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddRouting(options =>
 {
     options.LowercaseUrls = true;
+});
+
+builder.Services.AddAutoMapper(expression =>
+{
+    expression.AddProfile<EmployeeProfile>();
+    expression.AddProfile<EducationProfile>();
+    expression.AddProfile<UniversityProfile>();
+    expression.AddProfile<AccountProfile>();
+    expression.AddProfile<RoleProfile>();
+    expression.AddProfile<ProfilingProfile>();
+    expression.AddProfile<AccountRoleProfile>();
 });
 
 var app = builder.Build();
