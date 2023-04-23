@@ -1,3 +1,4 @@
+using API.DAOs;
 using API.DTOs.response;
 using API.Models;
 using API.Repositories.Contracts;
@@ -43,5 +44,19 @@ public class EmployeeRepository<TContext> : CoreRepository<string, TbMEmployee, 
             .AsEnumerable();
 
         return employees;
+    }
+
+    public async Task<IEnumerable<EmployeesTotalGroupByMajorAndUniversityNameDAO>> FindTotalGroupByMajorAndUniversityName()
+    {
+        var result = _dbSet.Include(e => e.TbTrProfiling).Include(e => e.TbTrProfiling.Education)
+            .GroupBy(e => new {e.TbTrProfiling.Education.Major, e.TbTrProfiling.Education.University.Name})
+            .Select(g => new EmployeesTotalGroupByMajorAndUniversityNameDAO
+            {
+                Total = g.Count(),
+                Major = g.Key.Major,
+                UniversityName = g.Key.Name
+            });
+
+        return result;
     }
 }
