@@ -71,6 +71,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddAuthorization(options =>
+{
+    // only admin can access resource with all methods
+    // user can only access resource with get method
+    options.AddPolicy("ViewOnlyUser", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireAssertion(context =>
+        {
+            var httpContext = context.Resource as HttpContext;
+
+            switch (httpContext?.Request.Method)
+            {
+                case "GET":
+                    return true;
+                default:
+                    return context.User.IsInRole("admin");
+            }
+        });
+    });
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
