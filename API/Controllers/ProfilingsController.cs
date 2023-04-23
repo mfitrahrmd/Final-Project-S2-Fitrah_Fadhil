@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.DTOs.request;
+using API.DTOs.response;
 using API.Models;
 using API.Repositories.Contracts;
 using AutoMapper;
@@ -11,7 +12,18 @@ namespace API.Controllers;
 [ApiController]
 public class ProfilingsController : CoreController<IProfilingRepository, string, TbTrProfiling, ProfilingDTO, InsertProfilingRequest, UpdateProfilingRequest>
 {
-    public ProfilingsController(IProfilingRepository repository, IMapper mapper) : base(repository, mapper)
+    private readonly IEmployeeRepository _employeeRepository;
+    
+    public ProfilingsController(IProfilingRepository repository, IEmployeeRepository employeeRepository, IMapper mapper) : base(repository, mapper)
     {
+        _employeeRepository = employeeRepository;
+    }
+
+    [HttpGet("avggpa/{year}")]
+    public async Task<IActionResult> Get(int year)
+    {
+        var employees = await _employeeRepository.FindManyByAboveAvgGpaAndHiringYear(year);
+
+        return Ok(_mapper.Map<IEnumerable<EmployeesAboveAvgGpaAndHiringYearResponse>>(employees));
     }
 }
