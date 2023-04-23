@@ -47,12 +47,7 @@ public class ExceptionFilter : ExceptionFilterAttribute
                 result.StatusCode = (int)HttpStatusCode.InternalServerError;
                 break;
         }
-        
 
-        context.Result = new ObjectResult(new {})
-        {
-            Value = "nothing"
-        };
-
+        context.Result = result;
     }
 }
