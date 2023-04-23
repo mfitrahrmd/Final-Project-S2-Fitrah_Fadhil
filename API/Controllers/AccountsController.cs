@@ -1,4 +1,5 @@
 using System.Net;
+using API.DTOs;
 using API.DTOs.request;
 using API.Models;
 using API.Repositories.Contracts;
@@ -10,7 +11,7 @@ namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AccountsController : CoreController<IAccountRepository, string, TbMAccount>
+public class AccountsController : CoreController<IAccountRepository, string, TbMAccount, AccountDTO, InsertAccountRequest, UpdateAccountRequest>
 {
     private readonly AuthService _authService;
 
