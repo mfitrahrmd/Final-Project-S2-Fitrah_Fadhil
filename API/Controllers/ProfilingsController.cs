@@ -34,4 +34,12 @@ public class ProfilingsController : CoreController<IProfilingRepository, string,
 
         return Ok(result);
     }
+
+    [HttpGet("workperiod")]
+    public async Task<IActionResult> GetByWorkPeriod()
+    {
+        var result = await _employeeRepository.FindByWorkPeriod();
+
+        return Ok(_mapper.Map<IEnumerable<EmployeeDTO>>(result));
+    }
 }
