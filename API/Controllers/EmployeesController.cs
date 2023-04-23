@@ -1,3 +1,4 @@
+using API.DTOs.response;
 using API.Models;
 using API.Repositories.Contracts;
 using AutoMapper;
@@ -11,5 +12,15 @@ public class EmployeesController : CoreController<IEmployeeRepository, string, T
 {
     public EmployeesController(IEmployeeRepository repository, IMapper mapper) : base(repository, mapper)
     {
+    }
+
+    [HttpGet("master")]
+    public async Task<IActionResult> Get()
+    {
+        var employees = await _repository.FindManyIncludeEducationAndUniversityAsync();
+
+        var employeesMasterResponse = _mapper.Map<IEnumerable<EmployeesMasterResponse>>(employees);
+        
+        return Ok(employeesMasterResponse);
     }
 }
