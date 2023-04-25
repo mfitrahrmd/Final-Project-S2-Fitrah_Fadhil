@@ -5,7 +5,7 @@ using DTS_Web_Api.ViewModels;
 
 namespace DTS_Web_Api.Repository.Data
 {
-    public class AccountRepository : GeneralRepository<TbMAccount, string, MyContext>, IAccountRepository
+    public class AccountRepository : GeneralRepository<Account, string, MyContext>, IAccountRepository
     {
         private readonly IUniversityRepository _universityRepository;
         private readonly IEducationRepository _educationRepository;
@@ -32,20 +32,21 @@ namespace DTS_Web_Api.Repository.Data
             try
             {
 
-                var university = new TbMUniversity
+                var university = new University
                 {
                     Name = registerVM.UniversityName
                 };
-                if (await _universityRepository.IsNameExist(registerVM.UniversityName))
+                if (await _universityRepository.IsNameExistAsync(registerVM.UniversityName))
                 {
-
+                    var univData = _universityRepository.GetByNameAsync(registerVM.UniversityName);
+                    university.Id = univData.Id;
                 }
                 else
                 {
                     await _universityRepository.InsertAsync(university);
                 }
 
-                var education = new TbMEducation
+                var education = new Education
                 {
                     Major = registerVM.Major,
                     Degree = registerVM.Degree,
@@ -55,7 +56,7 @@ namespace DTS_Web_Api.Repository.Data
                 await _educationRepository.InsertAsync(education);
 
                 // Employee
-                var employee = new TbMEmployee
+                var employee = new Employee
                 {
                     Nik = registerVM.NIK,
                     FirstName = registerVM.FirstName,
@@ -68,21 +69,21 @@ namespace DTS_Web_Api.Repository.Data
                 };
                 await _employeeRepository.InsertAsync(employee);
                 // Account
-                var account = new TbMAccount
+                var account = new Account
                 {
                     Nik = registerVM.NIK,
                     Password = registerVM.Password,
                 };
                 await InsertAsync(account);
                 // Profiling
-                var profiling = new TbMProfiling
+                var profiling = new Profiling
                 {
                     Id = registerVM.NIK,
                     EducationId = education.Id,
                 };
                 await _profilingRepository.InsertAsync(profiling);
                 // AccountRole
-                var accountRole = new TbMAccountRole
+                var accountRole = new AccountRole
                 {
                     RoleId = 1,
                     EmployeeNik = registerVM.NIK,

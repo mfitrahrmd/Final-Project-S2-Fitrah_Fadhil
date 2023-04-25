@@ -289,3 +289,5 @@ E:\code\visual studio\DTS_API\DTS_Web_Api\bin\Debug\net6.0\runtimes\win\lib\net6
 E:\code\visual studio\DTS_API\DTS_Web_Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 E:\code\visual studio\DTS_API\DTS_Web_Api\obj\Debug\net6.0\DTS_Web_Api.RazorAssemblyInfo.cache
 E:\code\visual studio\DTS_API\DTS_Web_Api\obj\Debug\net6.0\DTS_Web_Api.RazorAssemblyInfo.cs
+E:\code\visual studio\DTS_API\DTS_Web_Api\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\code\visual studio\DTS_API\DTS_Web_Api\bin\Debug\net6.0\BCrypt.Net-Next.dll

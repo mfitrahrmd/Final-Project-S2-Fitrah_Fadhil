@@ -2,7 +2,7 @@
 
 namespace DTS_Web_Api.Repository.Contracts
 {
-    public interface IRoleRepository : IGeneralRepository<TbMRole, int>
+    public interface IRoleRepository : IGeneralRepository<Role, int>
     {
     }
 }

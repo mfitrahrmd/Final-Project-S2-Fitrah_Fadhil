@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace DTS_Web_Api.Models;
 
-public partial class TbMProfiling
+public partial class Profiling
 {
     public string Id { get; set; } = null!;
 
     public int EducationId { get; set; }
 
-    public virtual TbMEducation Education { get; set; } = null!;
+    public virtual Education? Education { get; set; } = null!;
 
-    public virtual TbMEmployee IdNavigation { get; set; } = null!;
+    public virtual Employee? IdNavigation { get; set; } = null!;
 }

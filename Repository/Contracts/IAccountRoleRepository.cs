@@ -2,7 +2,8 @@
 
 namespace DTS_Web_Api.Repository.Contracts
 {
-    public interface IAccountRoleRepository : IGeneralRepository<TbMAccountRole, int>
+    public interface IAccountRoleRepository : IGeneralRepository<AccountRole, int>
     {
+        Task<IEnumerable<string>> GetRolesByNikAsync(string nik);
     }
 }

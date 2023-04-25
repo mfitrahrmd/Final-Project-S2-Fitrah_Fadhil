@@ -2,7 +2,7 @@
 
 namespace DTS_Web_Api.Repository.Contracts
 {
-    public interface IEducationRepository : IGeneralRepository<TbMEducation, int>
+    public interface IEducationRepository : IGeneralRepository<Education, int>
     {
     }
 }

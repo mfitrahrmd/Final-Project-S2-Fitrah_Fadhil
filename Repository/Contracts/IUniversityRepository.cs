@@ -2,8 +2,10 @@
 
 namespace DTS_Web_Api.Repository.Contracts
 {
-    public interface IUniversityRepository : IGeneralRepository<TbMUniversity, int>
+    public interface IUniversityRepository : IGeneralRepository<University, int>
     {
-        Task<bool> IsNameExist(string name);
+        Task<University?> GetByNameAsync(string name);
+        Task<bool> IsNameExistAsync(string name);
+
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DTS_Web_Api.Models;
 
-public partial class TbMEducation
+public partial class Education
 {
     public int Id { get; set; }
 
@@ -15,7 +16,9 @@ public partial class TbMEducation
 
     public int UniversityId { get; set; }
 
-    public virtual TbMProfiling? TbMProfiling { get; set; }
+    [JsonIgnore]
+    public virtual Profiling? TbMProfiling { get; set; }
 
-    public virtual TbMUniversity University { get; set; } = null!;
+    [JsonIgnore]
+    public virtual University? University { get; set; }
 }

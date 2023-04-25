@@ -23,10 +23,11 @@ namespace DTS_Web_Api.Repository
             return await _context.Set<TEntity>().FindAsync(key);
         }
 
-        public async Task InsertAsync(TEntity entity)
+        public virtual async Task<TEntity?> InsertAsync(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
             await _context.SaveChangesAsync();
+            return entity;
         }
 
         public async Task UpdateAsync(TEntity entity)

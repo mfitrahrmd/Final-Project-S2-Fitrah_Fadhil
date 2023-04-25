@@ -16,26 +16,26 @@ public partial class MyContext : DbContext
     {
     }
 
-    public virtual DbSet<TbMAccount> TbMAccounts { get; set; }
+    public virtual DbSet<Account> TbMAccounts { get; set; }
 
-    public virtual DbSet<TbMAccountRole> TbMAccountRoles { get; set; }
+    public virtual DbSet<AccountRole> TbMAccountRoles { get; set; }
 
-    public virtual DbSet<TbMEducation> TbMEducations { get; set; }
+    public virtual DbSet<Education> TbMEducations { get; set; }
 
-    public virtual DbSet<TbMEmployee> TbMEmployees { get; set; }
+    public virtual DbSet<Employee> TbMEmployees { get; set; }
 
-    public virtual DbSet<TbMProfiling> TbMProfilings { get; set; }
+    public virtual DbSet<Profiling> TbMProfilings { get; set; }
 
-    public virtual DbSet<TbMRole> TbMRoles { get; set; }
+    public virtual DbSet<Role> TbMRoles { get; set; }
 
-    public virtual DbSet<TbMUniversity> TbMUniversities { get; set; }
+    public virtual DbSet<University> TbMUniversities { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=ConnectionStrings:Default");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<TbMAccount>(entity =>
+        modelBuilder.Entity<Account>(entity =>
         {
             entity.HasKey(e => e.Nik);
 
@@ -52,11 +52,11 @@ public partial class MyContext : DbContext
                 .HasColumnName("password");
 
             entity.HasOne(d => d.NikNavigation).WithOne(p => p.TbMAccount)
-                .HasForeignKey<TbMAccount>(d => d.Nik)
+                .HasForeignKey<Account>(d => d.Nik)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
-        modelBuilder.Entity<TbMAccountRole>(entity =>
+        modelBuilder.Entity<AccountRole>(entity =>
         {
             entity.ToTable("tb_m_account_roles");
 
@@ -81,7 +81,7 @@ public partial class MyContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
-        modelBuilder.Entity<TbMEducation>(entity =>
+        modelBuilder.Entity<Education>(entity =>
         {
             entity.ToTable("tb_m_educations");
 
@@ -106,7 +106,7 @@ public partial class MyContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
-        modelBuilder.Entity<TbMEmployee>(entity =>
+        modelBuilder.Entity<Employee>(entity =>
         {
             entity.HasKey(e => e.Nik);
 
@@ -146,7 +146,7 @@ public partial class MyContext : DbContext
                 .HasColumnName("phone_number");
         });
 
-        modelBuilder.Entity<TbMProfiling>(entity =>
+        modelBuilder.Entity<Profiling>(entity =>
         {
             entity.ToTable("tb_m_profilings");
 
@@ -160,15 +160,15 @@ public partial class MyContext : DbContext
             entity.Property(e => e.EducationId).HasColumnName("education_id");
 
             entity.HasOne(d => d.Education).WithOne(p => p.TbMProfiling)
-                .HasForeignKey<TbMProfiling>(d => d.EducationId)
+                .HasForeignKey<Profiling>(d => d.EducationId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             entity.HasOne(d => d.IdNavigation).WithOne(p => p.TbMProfiling)
-                .HasForeignKey<TbMProfiling>(d => d.Id)
+                .HasForeignKey<Profiling>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
-        modelBuilder.Entity<TbMRole>(entity =>
+        modelBuilder.Entity<Role>(entity =>
         {
             entity.ToTable("tb_m_roles");
 
@@ -179,7 +179,7 @@ public partial class MyContext : DbContext
                 .HasColumnName("name");
         });
 
-        modelBuilder.Entity<TbMUniversity>(entity =>
+        modelBuilder.Entity<University>(entity =>
         {
             entity.ToTable("tb_m_universities");
 

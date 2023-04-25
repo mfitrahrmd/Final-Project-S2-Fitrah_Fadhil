@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DTS_Web_Api.Models;
 
-public partial class TbMEmployee
+public partial class Employee
 {
     public string Nik { get; set; } = null!;
 
@@ -21,9 +22,11 @@ public partial class TbMEmployee
 
     public string PhoneNumber { get; set; } = null!;
 
-    public virtual TbMAccount? TbMAccount { get; set; }
+    [JsonIgnore]
+    public virtual Account? TbMAccount { get; set; }
 
-    public virtual TbMProfiling? TbMProfiling { get; set; }
+    [JsonIgnore]
+    public virtual Profiling? TbMProfiling { get; set; }
 }
 
 public enum Gender
