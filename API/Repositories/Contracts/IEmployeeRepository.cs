@@ -3,12 +3,12 @@ using API.Models;
 
 namespace API.Repositories.Contracts;
 
-public interface IEmployeeRepository : IBaseRepository<string, TbMEmployee>
+public interface IEmployeeRepository : IBaseRepository<string, Employee>
 {
-    Task<TbMEmployee?> FindOneByEmailAsync(string email);
-    Task<TbMEmployee?> FindOneByPhoneNumberAsync(string phoneNumber);
-    Task<IEnumerable<TbMEmployee>> FindManyIncludeEducationAndUniversityAsync();
-    Task<IEnumerable<TbMEmployee>> FindManyByAboveAvgGpaAndHiringYear(int year);
+    Task<Employee?> FindOneByEmailAsync(string email);
+    Task<Employee?> FindOneByPhoneNumberAsync(string phoneNumber);
+    Task<IEnumerable<Employee>> FindManyIncludeEducationAndUniversityAsync();
+    Task<IEnumerable<Employee>> FindManyByAboveAvgGpaAndHiringYear(int year);
     Task<IEnumerable<EmployeesTotalGroupByMajorAndUniversityNameDAO>> FindTotalGroupByMajorAndUniversityName();
-    Task<IEnumerable<TbMEmployee>> FindByWorkPeriod();
+    Task<IEnumerable<Employee>> FindByWorkPeriod();
 }

@@ -9,8 +9,8 @@ public class RoleProfile : Profile
 {
     public RoleProfile()
     {
-        CreateMap<TbMRole, RoleDTO>();
-        CreateMap<InsertRoleRequest, TbMRole>();
-        CreateMap<UpdateRoleRequest, TbMRole>();
+        CreateMap<Role, RoleDTO>();
+        CreateMap<InsertRoleRequest, Role>();
+        CreateMap<UpdateRoleRequest, Role>();
     }
 }

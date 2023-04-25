@@ -9,7 +9,7 @@ namespace API.Models;
 
 [Table("TB_M_Employees")]
 [Index("Email", Name = "ix_tb_m_employees_email", IsUnique = true)]
-public class TbMEmployee : IEntity<string>
+public class Employee : IEntity<string>
 {
     [Column("nik")]
     [StringLength(5)]
@@ -48,11 +48,11 @@ public class TbMEmployee : IEntity<string>
 
     [JsonIgnore]
     [InverseProperty("EmployeeNikNavigation")]
-    public virtual TbMAccount? TbMAccount { get; set; }
+    public virtual Account? TbMAccount { get; set; }
 
     [JsonIgnore]
     [InverseProperty("EmployeeNikNavigation")]
-    public virtual TbTrProfiling? TbTrProfiling { get; set; }
+    public virtual Profiling? TbTrProfiling { get; set; }
     
     [JsonIgnore]
     [NotMapped]

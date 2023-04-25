@@ -9,8 +9,8 @@ public class AccountProfile : Profile
 {
     public AccountProfile()
     {
-        CreateMap<TbMAccount, AccountDTO>();
-        CreateMap<InsertAccountRequest, TbMAccount>();
-        CreateMap<UpdateAccountRequest, TbMAccount>();
+        CreateMap<Account, AccountDTO>();
+        CreateMap<InsertAccountRequest, Account>();
+        CreateMap<UpdateAccountRequest, Account>();
     }
 }

@@ -9,8 +9,8 @@ public class ProfilingProfile : Profile
 {
     public ProfilingProfile()
     {
-        CreateMap<TbTrProfiling, ProfilingDTO>();
-        CreateMap<InsertProfilingRequest, TbTrProfiling>();
-        CreateMap<UpdateProfilingRequest, TbTrProfiling>();
+        CreateMap<Profiling, ProfilingDTO>();
+        CreateMap<InsertProfilingRequest, Profiling>();
+        CreateMap<UpdateProfilingRequest, Profiling>();
     }
 }

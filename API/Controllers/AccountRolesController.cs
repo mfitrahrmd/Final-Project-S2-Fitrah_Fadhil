@@ -9,7 +9,7 @@ namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AccountRolesController : CoreController<IAccountRoleRepository, int, TbTrAccountRole, AccountRoleDTO, InsertAccountRoleRequest, UpdateAccountRoleRequest>
+public class AccountRolesController : CoreController<IAccountRoleRepository, int, AccountRole, AccountRoleDTO, InsertAccountRoleRequest, UpdateAccountRoleRequest>
 {
     public AccountRolesController(IAccountRoleRepository repository, IMapper mapper) : base(repository, mapper)
     {

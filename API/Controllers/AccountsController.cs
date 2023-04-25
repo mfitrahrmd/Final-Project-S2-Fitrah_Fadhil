@@ -13,7 +13,7 @@ namespace API.Controllers;
 [Authorize(Roles = "admin")]
 [Route("api/[controller]")]
 [ApiController]
-public class AccountsController : CoreController<IAccountRepository, string, TbMAccount, AccountDTO, InsertAccountRequest, UpdateAccountRequest>
+public class AccountsController : CoreController<IAccountRepository, string, Account, AccountDTO, InsertAccountRequest, UpdateAccountRequest>
 {
     private readonly AuthService _authService;
 

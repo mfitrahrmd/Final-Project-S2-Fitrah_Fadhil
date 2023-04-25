@@ -10,7 +10,7 @@ namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ProfilingsController : CoreController<IProfilingRepository, string, TbTrProfiling, ProfilingDTO, InsertProfilingRequest, UpdateProfilingRequest>
+public class ProfilingsController : CoreController<IProfilingRepository, string, Profiling, ProfilingDTO, InsertProfilingRequest, UpdateProfilingRequest>
 {
     private readonly IEmployeeRepository _employeeRepository;
     

@@ -10,8 +10,8 @@ public class UniversityProfile : Profile
 {
     public UniversityProfile()
     {
-        CreateMap<TbMUniversity, UniversityDTO>();
-        CreateMap<InsertUniversityRequest, TbMUniversity>();
-        CreateMap<UpdateUniversityRequest, TbMUniversity>();
+        CreateMap<University, UniversityDTO>();
+        CreateMap<InsertUniversityRequest, University>();
+        CreateMap<UpdateUniversityRequest, University>();
     }
 }

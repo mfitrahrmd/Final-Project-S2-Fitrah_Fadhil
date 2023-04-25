@@ -17,15 +17,15 @@ public class UniversityRepositoryShould : API_Tests
     [TestMethod]
     public void FindManyContainsName_Should_Find_Entities_Contains_Name()
     {
-        _universityRepository.InsertOne(new TbMUniversity
+        _universityRepository.InsertOne(new University
         {
             Name = "University of Cambridge"
         });
-        _universityRepository.InsertOne(new TbMUniversity
+        _universityRepository.InsertOne(new University
         {
             Name = "University of Toronto"
         });
-        _universityRepository.InsertOne(new TbMUniversity
+        _universityRepository.InsertOne(new University
         {
             Name = "State Polytechnic of Cambridge"
         });
@@ -64,6 +64,6 @@ public class UniversityRepositoryShould : API_Tests
     {
         public string Name { get; set; }
         public string UniversityName { get; set; }
-        public Action<IEnumerable<TbMUniversity>> Result;
+        public Action<IEnumerable<University>> Result;
     }
 }

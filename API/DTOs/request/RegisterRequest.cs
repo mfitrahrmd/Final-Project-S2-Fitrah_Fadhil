@@ -37,9 +37,9 @@ public class RegisterRequest
     [MaxLength(255)]
     public string Password { get; set; }
 
-    public TbMEmployee ToEmployeeEntity()
+    public Employee ToEmployeeEntity()
     {
-        return new TbMEmployee
+        return new Employee
         {
             Nik = Nik,
             FirstName = FirstName,
@@ -48,18 +48,18 @@ public class RegisterRequest
             Birthdate = Birthdate,
             Email = Email,
             PhoneNumber = PhoneNumber,
-            TbMAccount = new TbMAccount
+            TbMAccount = new Account
             {
                 Password = Password
             },
-            TbTrProfiling = new TbTrProfiling
+            TbTrProfiling = new Profiling
             {
-                Education = new TbMEducation
+                Education = new Education
                 {
                     Major = Major,
                     Degree = Degree,
                     Gpa = Gpa,
-                    University = new TbMUniversity
+                    University = new University
                     {
                         Name = UniversityName
                     }

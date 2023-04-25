@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Models;
 
 [Table("TB_M_Universities")]
-public class TbMUniversity : IEntity<int>
+public class University : IEntity<int>
 {
     [Column("id")]
     [Key]
@@ -20,7 +20,7 @@ public class TbMUniversity : IEntity<int>
 
     [JsonIgnore]
     [InverseProperty("University")]
-    public virtual ICollection<TbMEducation> TbMEducations { get; set; } = new List<TbMEducation>();
+    public virtual ICollection<Education> TbMEducations { get; set; } = new List<Education>();
 
     [JsonIgnore]
     [NotMapped]

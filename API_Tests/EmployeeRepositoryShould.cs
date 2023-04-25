@@ -18,7 +18,7 @@ public class EmployeeRepositoryShould : API_Tests
     [TestMethod]
     public async Task FindOneByEmail_Should_Find_Employee_With_Given_Email()
     {
-        var insertedEmployee = await _employeeRepository.InsertOne(new TbMEmployee
+        var insertedEmployee = await _employeeRepository.InsertOne(new Employee
         {
             Nik = "10000",
             FirstName = "Fitrah",
@@ -68,6 +68,6 @@ public class EmployeeRepositoryShould : API_Tests
     {
         public string Name { get; set; }
         public string EmployeeEmail { get; set; }
-        public Action<TbMEmployee> Result;
+        public Action<Employee> Result;
     }
 }

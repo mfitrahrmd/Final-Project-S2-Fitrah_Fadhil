@@ -10,13 +10,13 @@ public class EmployeeProfile : Profile
 {
     public EmployeeProfile()
     {
-        CreateMap<TbMEmployee, EmployeeDTO>();
-        CreateMap<TbMEmployee, EmployeesMasterResponse>()
+        CreateMap<Employee, EmployeeDTO>();
+        CreateMap<Employee, EmployeesMasterResponse>()
             .ForMember(dest => dest.Education, opt => opt.MapFrom(src => src.TbTrProfiling.Education))
             .ForMember(dest => dest.University, opt => opt.MapFrom(src => src.TbTrProfiling.Education.University));
-        CreateMap<InsertEmployeeRequest, TbMEmployee>();
-        CreateMap<UpdateEmployeeRequest, TbMEmployee>();
-        CreateMap<TbMEmployee, EmployeesAboveAvgGpaAndHiringYearResponse>()
+        CreateMap<InsertEmployeeRequest, Employee>();
+        CreateMap<UpdateEmployeeRequest, Employee>();
+        CreateMap<Employee, EmployeesAboveAvgGpaAndHiringYearResponse>()
             .ForMember(dest => dest.Education, opt => opt.MapFrom(src => src.TbTrProfiling.Education))
             .ForMember(dest => dest.University, opt => opt.MapFrom(src => src.TbTrProfiling.Education.University));
     }

@@ -10,8 +10,8 @@ public class AccountRoleProfile : Profile
     
     public AccountRoleProfile()
     {
-        CreateMap<TbTrAccountRole, AccountRoleDTO>();
-        CreateMap<InsertAccountRoleRequest, TbTrAccountRole>();
-        CreateMap<UpdateAccountRoleRequest, TbTrAccountRole>();
+        CreateMap<AccountRole, AccountRoleDTO>();
+        CreateMap<InsertAccountRoleRequest, AccountRole>();
+        CreateMap<UpdateAccountRoleRequest, AccountRole>();
     }
 }

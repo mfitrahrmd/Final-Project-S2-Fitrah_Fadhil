@@ -11,7 +11,7 @@ namespace API.Controllers;
 [Authorize(Policy = "ViewOnlyUser")] // user can only access controller with 'GET' method
 [Route("api/[controller]")]
 [ApiController]
-public class EducationsController : CoreController<IEducationRepository, int, TbMEducation, EducationDTO, InsertEducationRequest, UpdateEducationRequest>
+public class EducationsController : CoreController<IEducationRepository, int, Education, EducationDTO, InsertEducationRequest, UpdateEducationRequest>
 {
     public EducationsController(IEducationRepository repository, IMapper mapper) : base(repository, mapper)
     {

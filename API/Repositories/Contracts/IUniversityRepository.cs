@@ -2,9 +2,9 @@ using API.Models;
 
 namespace API.Repositories.Contracts;
 
-public interface IUniversityRepository : IBaseRepository<int, TbMUniversity>
+public interface IUniversityRepository : IBaseRepository<int, University>
 {
-    Task<IEnumerable<TbMUniversity>> FindManyContainsNameAsync(string name);
-    Task<TbMUniversity?> FindOneByNameAsync(string name);
-    Task<TbMUniversity> FindOneOrInsertByName(string name);
+    Task<IEnumerable<University>> FindManyContainsNameAsync(string name);
+    Task<University?> FindOneByNameAsync(string name);
+    Task<University> FindOneOrInsertByName(string name);
 }

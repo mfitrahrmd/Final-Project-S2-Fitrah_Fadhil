@@ -11,7 +11,7 @@ namespace API.Controllers;
 [Authorize]
 [Route("api/[controller]")]
 [ApiController]
-public class UniversitiesController : CoreController<IUniversityRepository, int, TbMUniversity, UniversityDTO, InsertUniversityRequest, UpdateUniversityRequest>
+public class UniversitiesController : CoreController<IUniversityRepository, int, University, UniversityDTO, InsertUniversityRequest, UpdateUniversityRequest>
 {
     public UniversitiesController(IUniversityRepository repository, IMapper mapper) : base(repository, mapper)
     {

@@ -6,24 +6,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories.Implementations;
 
-public class EmployeeRepository<TContext> : CoreRepository<string, TbMEmployee, TContext>, IEmployeeRepository
+public class EmployeeRepository<TContext> : CoreRepository<string, Employee, TContext>, IEmployeeRepository
     where TContext : DbContext
 {
     public EmployeeRepository(TContext context) : base(context)
     {
     }
 
-    public async Task<TbMEmployee?> FindOneByEmailAsync(string email)
+    public async Task<Employee?> FindOneByEmailAsync(string email)
     {
         return await _dbSet.FirstOrDefaultAsync(e => e.Email.Equals(email));
     }
 
-    public async Task<TbMEmployee?> FindOneByPhoneNumberAsync(string phoneNumber)
+    public async Task<Employee?> FindOneByPhoneNumberAsync(string phoneNumber)
     {
         return await _dbSet.FirstOrDefaultAsync(e => e.PhoneNumber.Equals(phoneNumber));
     }
 
-    public async Task<IEnumerable<TbMEmployee>> FindManyIncludeEducationAndUniversityAsync()
+    public async Task<IEnumerable<Employee>> FindManyIncludeEducationAndUniversityAsync()
     {
         return _dbSet
             .Include(e => e.TbTrProfiling)
@@ -32,7 +32,7 @@ public class EmployeeRepository<TContext> : CoreRepository<string, TbMEmployee, 
             .AsEnumerable();
     }
     
-    public async Task<IEnumerable<TbMEmployee>> FindManyByAboveAvgGpaAndHiringYear(int year)
+    public async Task<IEnumerable<Employee>> FindManyByAboveAvgGpaAndHiringYear(int year)
     {
         var avgGpa = _dbSet.Select(e => e.TbTrProfiling.Education.Gpa).AsEnumerable().Average();
         
@@ -60,7 +60,7 @@ public class EmployeeRepository<TContext> : CoreRepository<string, TbMEmployee, 
         return result;
     }
 
-    public async Task<IEnumerable<TbMEmployee>> FindByWorkPeriod()
+    public async Task<IEnumerable<Employee>> FindByWorkPeriod()
     {
         var result = _dbSet.OrderBy(e => e.HiringDate);
 

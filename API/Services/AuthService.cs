@@ -55,7 +55,7 @@ public class AuthService
         account.TbTrProfiling.Education.UniversityId = foundUniversity.Id;
 
         var foundRole = await _roleRepository.FindOneOrInsertByName("user");
-        account.TbMAccount.TbTrAccountRoles.Add(new TbTrAccountRole
+        account.TbMAccount.TbTrAccountRoles.Add(new AccountRole
         {
             RoleId = foundRole.Id
         });

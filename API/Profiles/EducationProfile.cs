@@ -10,8 +10,8 @@ public class EducationProfile : Profile
 {
     public EducationProfile()
     {
-        CreateMap<TbMEducation, EducationDTO>();
-        CreateMap<InsertEducationRequest, TbMEducation>();
-        CreateMap<UpdateEducationRequest, TbMEducation>();
+        CreateMap<Education, EducationDTO>();
+        CreateMap<InsertEducationRequest, Education>();
+        CreateMap<UpdateEducationRequest, Education>();
     }
 }

@@ -10,7 +10,7 @@ namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class EmployeesController : CoreController<IEmployeeRepository, string, TbMEmployee, EmployeeDTO, InsertEmployeeRequest, UpdateEmployeeRequest>
+public class EmployeesController : CoreController<IEmployeeRepository, string, Employee, EmployeeDTO, InsertEmployeeRequest, UpdateEmployeeRequest>
 {
     public EmployeesController(IEmployeeRepository repository, IMapper mapper) : base(repository, mapper)
     {
