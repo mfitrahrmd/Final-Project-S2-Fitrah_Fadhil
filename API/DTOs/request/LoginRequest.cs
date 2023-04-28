@@ -9,12 +9,12 @@ public class LoginRequest
     public string Email { get; set; }
     public string Password { get; set; }
 
-    public TbMEmployee ToEmployeeEntity()
+    public Employee ToEmployeeEntity()
     {
-        return new TbMEmployee
+        return new Employee
         {
             Email = Email,
-            TbMAccount = new TbMAccount
+            TbMAccount = new Account
             {
                 Password = Password
             }

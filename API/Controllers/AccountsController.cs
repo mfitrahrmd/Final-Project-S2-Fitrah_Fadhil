@@ -1,23 +1,28 @@
 using System.Net;
+using API.DTOs;
 using API.DTOs.request;
 using API.Models;
 using API.Repositories.Contracts;
 using API.Services;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+[Authorize(Roles = "admin")]
 [Route("api/[controller]")]
 [ApiController]
-public class AccountController : CoreController<IAccountRepository, string, TbMAccount>
+public class AccountsController : CoreController<IAccountRepository, string, Account, AccountDTO, InsertAccountRequest, UpdateAccountRequest>
 {
     private readonly AuthService _authService;
 
-    public AccountController(IAccountRepository accountRepository, AuthService authService) : base(accountRepository)
+    public AccountsController(IAccountRepository accountRepository, AuthService authService, IMapper mapper) : base(accountRepository, mapper)
     {
         _authService = authService;
     }
 
+    [AllowAnonymous]
     [HttpPost("Register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {
@@ -26,6 +31,7 @@ public class AccountController : CoreController<IAccountRepository, string, TbMA
         return StatusCode((int)HttpStatusCode.Created, result);
     }
 
+    [AllowAnonymous]
     [HttpPost("Auth")]
     public async Task<IActionResult> Login(LoginRequest request)
     {

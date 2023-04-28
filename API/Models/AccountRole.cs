@@ -9,7 +9,7 @@ namespace API.Models;
 [Table("TB_TR_Account_Roles")]
 [Index("AccountNik", Name = "ix_tb_tr_account_roles_account_nik")]
 [Index("RoleId", Name = "ix_tb_tr_account_roles_role_id")]
-public class TbTrAccountRole : IEntity<int>
+public class AccountRole : IEntity<int>
 {
     [Column("id")]
     [Key]
@@ -26,12 +26,12 @@ public class TbTrAccountRole : IEntity<int>
     [JsonIgnore]
     [ForeignKey("AccountNik")]
     [InverseProperty("TbTrAccountRoles")]
-    public virtual TbMAccount AccountNikNavigation { get; set; } = null!;
+    public virtual Account AccountNikNavigation { get; set; } = null!;
 
     [JsonIgnore]
     [ForeignKey("RoleId")]
     [InverseProperty("TbTrAccountRoles")]
-    public virtual TbMRole Role { get; set; } = null!;
+    public virtual Role Role { get; set; } = null!;
 
     [JsonIgnore]
     [NotMapped]

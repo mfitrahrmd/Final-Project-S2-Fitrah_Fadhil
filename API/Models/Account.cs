@@ -6,9 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Models;
 
-[Table("TB_TR_Profilings")]
-[Index("EducationId", Name = "ix_tb_tr_profilings_education_id", IsUnique = true)]
-public class TbTrProfiling : IEntity<string>
+[Table("TB_M_Accounts")]
+public class Account : IEntity<string>
 {
     [Column("employee_nik")]
     [StringLength(5)]
@@ -16,18 +15,19 @@ public class TbTrProfiling : IEntity<string>
     [Key]
     public string EmployeeNik { get; set; } = null!;
 
-    [Column("education_id")]
-    public int EducationId { get; set; }
-
-    [JsonIgnore]
-    [ForeignKey("EducationId")]
-    [InverseProperty("TbTrProfiling")]
-    public virtual TbMEducation Education { get; set; } = null!;
+    [Column("password")]
+    [StringLength(255)]
+    [Unicode(false)]
+    public string Password { get; set; } = null!;
 
     [JsonIgnore]
     [ForeignKey("EmployeeNik")]
-    [InverseProperty("TbTrProfiling")]
-    public virtual TbMEmployee EmployeeNikNavigation { get; set; } = null!;
+    [InverseProperty("TbMAccount")]
+    public virtual Employee EmployeeNikNavigation { get; set; } = null!;
+
+    [JsonIgnore]
+    [InverseProperty("AccountNikNavigation")]
+    public virtual ICollection<AccountRole> TbTrAccountRoles { get; set; } = new List<AccountRole>();
 
     [JsonIgnore]
     [NotMapped]

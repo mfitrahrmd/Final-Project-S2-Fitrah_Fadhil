@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Models;
 
 [Table("TB_M_Roles")]
-public class TbMRole : IEntity<int>
+public class Role : IEntity<int>
 {
     [Column("id")]
     [Key]
@@ -20,7 +20,7 @@ public class TbMRole : IEntity<int>
 
     [JsonIgnore]
     [InverseProperty("Role")]
-    public virtual ICollection<TbTrAccountRole> TbTrAccountRoles { get; set; } = new List<TbTrAccountRole>();
+    public virtual ICollection<AccountRole> TbTrAccountRoles { get; set; } = new List<AccountRole>();
 
     [JsonIgnore]
     [NotMapped]

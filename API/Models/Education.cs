@@ -8,7 +8,7 @@ namespace API.Models;
 
 [Table("TB_M_Educations")]
 [Index("UniversityId", Name = "ix_tb_m_educations_university_id")]
-public class TbMEducation : IEntity<int>
+public class Education : IEntity<int>
 {
     [Column("id")]
     [Key]
@@ -32,12 +32,12 @@ public class TbMEducation : IEntity<int>
 
     [JsonIgnore]
     [InverseProperty("Education")]
-    public virtual TbTrProfiling? TbTrProfiling { get; set; }
+    public virtual Profiling? TbTrProfiling { get; set; }
 
     [JsonIgnore]
     [ForeignKey("UniversityId")]
     [InverseProperty("TbMEducations")]
-    public virtual TbMUniversity University { get; set; } = null!;
+    public virtual University University { get; set; } = null!;
 
     [JsonIgnore]
     [NotMapped]

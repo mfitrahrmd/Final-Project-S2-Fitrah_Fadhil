@@ -14,19 +14,19 @@ public partial class Tugas6Context : DbContext
     {
     }
 
-    public virtual DbSet<TbMAccount> TbMAccounts { get; set; }
+    public virtual DbSet<Account> TbMAccounts { get; set; }
 
-    public virtual DbSet<TbMEducation> TbMEducations { get; set; }
+    public virtual DbSet<Education> TbMEducations { get; set; }
 
-    public virtual DbSet<TbMEmployee> TbMEmployees { get; set; }
+    public virtual DbSet<Employee> TbMEmployees { get; set; }
 
-    public virtual DbSet<TbMRole> TbMRoles { get; set; }
+    public virtual DbSet<Role> TbMRoles { get; set; }
 
-    public virtual DbSet<TbMUniversity> TbMUniversities { get; set; }
+    public virtual DbSet<University> TbMUniversities { get; set; }
 
-    public virtual DbSet<TbTrAccountRole> TbTrAccountRoles { get; set; }
+    public virtual DbSet<AccountRole> TbTrAccountRoles { get; set; }
 
-    public virtual DbSet<TbTrProfiling> TbTrProfilings { get; set; }
+    public virtual DbSet<Profiling> TbTrProfilings { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -35,7 +35,7 @@ public partial class Tugas6Context : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<TbMAccount>(entity =>
+        modelBuilder.Entity<Account>(entity =>
         {
             entity.HasKey(e => e.EmployeeNik).HasName("pk_tb_m_accounts");
 
@@ -45,7 +45,7 @@ public partial class Tugas6Context : DbContext
                 .HasConstraintName("fk_tb_m_accounts_tb_m_employees_employee_nik");
         });
 
-        modelBuilder.Entity<TbMEducation>(entity =>
+        modelBuilder.Entity<Education>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("pk_tb_m_educations");
 
@@ -54,7 +54,7 @@ public partial class Tugas6Context : DbContext
                 .HasConstraintName("fk_tb_m_educations_tb_m_universities_university_id");
         });
 
-        modelBuilder.Entity<TbMEmployee>(entity =>
+        modelBuilder.Entity<Employee>(entity =>
         {
             entity.HasKey(e => e.Nik).HasName("pk_tb_m_employees");
 
@@ -65,11 +65,11 @@ public partial class Tugas6Context : DbContext
             entity.Property(e => e.Nik).IsFixedLength();
         });
 
-        modelBuilder.Entity<TbMRole>(entity => { entity.HasKey(e => e.Id).HasName("pk_tb_m_roles"); });
+        modelBuilder.Entity<Role>(entity => { entity.HasKey(e => e.Id).HasName("pk_tb_m_roles"); });
 
-        modelBuilder.Entity<TbMUniversity>(entity => { entity.HasKey(e => e.Id).HasName("pk_tb_m_universities"); });
+        modelBuilder.Entity<University>(entity => { entity.HasKey(e => e.Id).HasName("pk_tb_m_universities"); });
 
-        modelBuilder.Entity<TbTrAccountRole>(entity =>
+        modelBuilder.Entity<AccountRole>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("pk_tb_tr_account_roles");
 
@@ -84,7 +84,7 @@ public partial class Tugas6Context : DbContext
                 .HasConstraintName("fk_tb_tr_account_roles_tb_m_roles_role_id");
         });
 
-        modelBuilder.Entity<TbTrProfiling>(entity =>
+        modelBuilder.Entity<Profiling>(entity =>
         {
             entity.HasKey(e => e.EmployeeNik).HasName("pk_tb_tr_profilings");
 

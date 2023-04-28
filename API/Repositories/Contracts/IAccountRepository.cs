@@ -2,6 +2,6 @@ using API.Models;
 
 namespace API.Repositories.Contracts;
 
-public interface IAccountRepository : IBaseRepository<string, TbMAccount>
+public interface IAccountRepository : IBaseRepository<string, Account>
 {
 }

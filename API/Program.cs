@@ -3,12 +3,14 @@ using System.Text;
 using System.Text.Json.Serialization;
 using API.Data;
 using API.Extensions.Filters;
+using API.Profiles;
 using API.Repositories.Contracts;
 using API.Repositories.Implementations;
 using API.Services;
 using API.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,10 +31,7 @@ builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ExceptionFilter>();
     options.Filters.Add<ResultFilter>();
-}).ConfigureApiBehaviorOptions(options =>
-{
-    options.SuppressModelStateInvalidFilter = true;
-}).AddJsonOptions(
+}).ConfigureApiBehaviorOptions(options => { options.SuppressModelStateInvalidFilter = true; }).AddJsonOptions(
     options =>
     {
         options.JsonSerializerOptions.DefaultIgnoreCondition =
@@ -41,9 +40,25 @@ builder.Services.AddControllers(options =>
             ReferenceHandler.IgnoreCycles; // ignore cardinality include cycle
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+// Configure CORS
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(policy => {
+        policy.AllowAnyOrigin();
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+    }));
+
+builder.Services.AddAutoMapper(expression =>
+{
+    expression.AddProfile<EmployeeProfile>();
+    expression.AddProfile<EducationProfile>();
+    expression.AddProfile<UniversityProfile>();
+    expression.AddProfile<AccountProfile>();
+    expression.AddProfile<RoleProfile>();
+    expression.AddProfile<ProfilingProfile>();
+    expression.AddProfile<AccountRoleProfile>();
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -62,6 +77,59 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
+
+builder.Services.AddAuthorization(options =>
+{
+    // only admin can access resource with all methods
+    // user can only access resource with get method
+    options.AddPolicy("ViewOnlyUser", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireAssertion(context =>
+        {
+            var httpContext = context.Resource as HttpContext;
+
+            switch (httpContext?.Request.Method)
+            {
+                case "GET":
+                    return true;
+                default:
+                    return context.User.IsInRole("admin");
+            }
+        });
+    });
+});
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Access Token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
+
+builder.Services.AddRouting(options => { options.LowercaseUrls = true; });
 
 var app = builder.Build();
 
@@ -82,6 +150,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthentication();
 

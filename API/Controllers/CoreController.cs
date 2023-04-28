@@ -1,58 +1,61 @@
 using API.Repositories.Contracts;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CoreController<TRepository, TPk, TEntity> : ControllerBase
+public class CoreController<TRepository, TPk, TEntity, TDTO, TInsertRequest, TUpdateRequest> : ControllerBase
     where TRepository : IBaseRepository<TPk, TEntity>
     where TEntity : class, IEntity<TPk>
 {
     protected readonly TRepository _repository;
+    protected readonly IMapper _mapper;
 
-    public CoreController(TRepository repository)
+    public CoreController(TRepository repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetAsync()
+    public async Task<IActionResult> GetAsync()
     {
         var entities = await _repository.FindAll();
 
-        return Ok(entities);
+        return Ok(_mapper.Map<IEnumerable<TDTO>>(entities));
     }
 
     [HttpGet("{pk}")]
-    public async Task<ActionResult> GetAsync(TPk pk)
+    public async Task<IActionResult> GetAsync(TPk pk)
     {
         var entity = await _repository.FindOneByPk(pk);
 
-        return Ok(entity);
+        return Ok(_mapper.Map<TDTO>(entity));
     }
 
     [HttpPost]
-    public async Task<ActionResult> PostAsync(TEntity entity)
+    public async Task<IActionResult> PostAsync(TInsertRequest request)
     {
-        var insertedEntity = await _repository.InsertOne(entity);
+        var insertedEntity = await _repository.InsertOne(_mapper.Map<TEntity>(request));
 
-        return Created("", insertedEntity);
+        return Created("", _mapper.Map<TDTO>(insertedEntity));
     }
 
     [HttpPut("{pk}")]
-    public async Task<ActionResult> PutAsync(TPk pk, TEntity entity)
+    public async Task<IActionResult> PutAsync(TPk pk, TUpdateRequest request)
     {
-        var updatedEntity = await _repository.UpdateOneByPk(pk, entity);
+        var updatedEntity = await _repository.UpdateOneByPk(pk, _mapper.Map<TEntity>(request));
 
-        return Ok(updatedEntity);
+        return Ok(_mapper.Map<TDTO>(updatedEntity));
     }
 
     [HttpDelete]
-    public async Task<ActionResult> DeleteAsync(TPk pk)
+    public async Task<IActionResult> DeleteAsync(TPk pk)
     {
         var deletedEntity = await _repository.DeleteOneByPk(pk);
 
-        return Ok(deletedEntity);
+        return Ok(_mapper.Map<TDTO>(deletedEntity));
     }
 }
