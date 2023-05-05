@@ -20,7 +20,7 @@ public class ProfilingsController : CoreController<IProfilingRepository, string,
     }
 
     [HttpGet("avggpa/{year}")]
-    public async Task<IActionResult> Get(int year)
+    public async Task<IActionResult> Get([FromRoute] int year)
     {
         var employees = await _employeeRepository.FindManyByAboveAvgGpaAndHiringYear(year);
 

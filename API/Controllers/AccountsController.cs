@@ -24,7 +24,7 @@ public class AccountsController : CoreController<IAccountRepository, string, Acc
 
     [AllowAnonymous]
     [HttpPost("Register")]
-    public async Task<IActionResult> Register(RegisterRequest request)
+    public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
         var result = await _authService.RegisterAsync(request);
 
@@ -33,7 +33,7 @@ public class AccountsController : CoreController<IAccountRepository, string, Acc
 
     [AllowAnonymous]
     [HttpPost("Auth")]
-    public async Task<IActionResult> Login(LoginRequest request)
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var result = await _authService.LoginAsync(request);
 

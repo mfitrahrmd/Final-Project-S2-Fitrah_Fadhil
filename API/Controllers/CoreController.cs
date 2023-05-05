@@ -28,7 +28,7 @@ public class CoreController<TRepository, TPk, TEntity, TDTO, TInsertRequest, TUp
     }
 
     [HttpGet("{pk}")]
-    public async Task<IActionResult> GetAsync(TPk pk)
+    public async Task<IActionResult> GetAsync([FromRoute] TPk pk)
     {
         var entity = await _repository.FindOneByPk(pk);
 
@@ -36,7 +36,7 @@ public class CoreController<TRepository, TPk, TEntity, TDTO, TInsertRequest, TUp
     }
 
     [HttpPost]
-    public async Task<IActionResult> PostAsync(TInsertRequest request)
+    public async Task<IActionResult> PostAsync([FromBody] TInsertRequest request)
     {
         var insertedEntity = await _repository.InsertOne(_mapper.Map<TEntity>(request));
 
@@ -44,7 +44,7 @@ public class CoreController<TRepository, TPk, TEntity, TDTO, TInsertRequest, TUp
     }
 
     [HttpPut("{pk}")]
-    public async Task<IActionResult> PutAsync(TPk pk, TUpdateRequest request)
+    public async Task<IActionResult> PutAsync([FromRoute] TPk pk, [FromBody] TUpdateRequest request)
     {
         var updatedEntity = await _repository.UpdateOneByPk(pk, _mapper.Map<TEntity>(request));
 
@@ -52,7 +52,7 @@ public class CoreController<TRepository, TPk, TEntity, TDTO, TInsertRequest, TUp
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteAsync(TPk pk)
+    public async Task<IActionResult> DeleteAsync([FromRoute] TPk pk)
     {
         var deletedEntity = await _repository.DeleteOneByPk(pk);
 
