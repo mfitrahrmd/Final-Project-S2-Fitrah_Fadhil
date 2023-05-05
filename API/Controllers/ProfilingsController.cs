@@ -19,7 +19,7 @@ public class ProfilingsController : CoreController<IProfilingRepository, string,
         _employeeRepository = employeeRepository;
     }
 
-    [HttpGet("avggpa/{year}")]
+    [HttpGet("AvgGpa/{year}")]
     public async Task<IActionResult> Get([FromRoute] int year)
     {
         var employees = await _employeeRepository.FindManyByAboveAvgGpaAndHiringYear(year);
@@ -27,7 +27,7 @@ public class ProfilingsController : CoreController<IProfilingRepository, string,
         return Ok(_mapper.Map<IEnumerable<EmployeesAboveAvgGpaAndHiringYearResponse>>(employees));
     }
 
-    [HttpGet("totalbymajor")]
+    [HttpGet("TotalByMajor")]
     public async Task<IActionResult> Get()
     {
         var result = await _employeeRepository.FindTotalGroupByMajorAndUniversityName();
@@ -35,7 +35,7 @@ public class ProfilingsController : CoreController<IProfilingRepository, string,
         return Ok(result);
     }
 
-    [HttpGet("workperiod")]
+    [HttpGet("WorkPeriod")]
     public async Task<IActionResult> GetByWorkPeriod()
     {
         var result = await _employeeRepository.FindByWorkPeriod();
