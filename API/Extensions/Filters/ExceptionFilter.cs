@@ -34,6 +34,20 @@ public class ExceptionFilter : ExceptionFilterAttribute
                 };
                 result.StatusCode = e.Code;
                 break;
+            case RepositoryException e:
+                switch (e.ErrorType)
+                {
+                    case RepositoryErrorType.NotFound:
+                        result.Value = new BaseResponse<object>()
+                        {
+                            Code = (int)HttpStatusCode.NotFound,
+                            IsSucceeded = false,
+                            Message = e.Message,
+                        };
+                        result.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
+                }
+                break;
             default:
                 _logger.LogError(
                     $"{nameof(ExceptionFilter)} : Error in {context.ActionDescriptor.DisplayName}. {context.Exception.Message}. Stack Trace : {context.Exception.StackTrace}");
