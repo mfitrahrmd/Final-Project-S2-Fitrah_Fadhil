@@ -42,7 +42,7 @@ public class ExceptionFilter : ExceptionFilterAttribute
                 {
                     Code = (int)HttpStatusCode.InternalServerError,
                     IsSucceeded = false,
-                    Message = context.Exception.Message,
+                    Message = "Unexpected server error, please try again later.",
                 };
                 result.StatusCode = (int)HttpStatusCode.InternalServerError;
                 break;
