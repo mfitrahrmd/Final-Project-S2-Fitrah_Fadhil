@@ -9,13 +9,20 @@ public class UniqueNik : ValidationAttribute
     {
         var employeeRepository = validationContext.GetService<IEmployeeRepository>();
 
-        var foundEmployee = employeeRepository.FindOneByPk(value.ToString()).Result;
-
-        if (foundEmployee is not null)
+        try
         {
-            return new ValidationResult($"Nik '{value}' is already taken.");
+            var foundEmployee = employeeRepository.FindOneByPk(value.ToString()).Result;
+            
+            if (foundEmployee is not null)
+            {
+                return new ValidationResult($"Nik '{value}' is already taken.");
+            }
         }
-        
+        catch (Exception e)
+        {
+            // ignored
+        }
+
         return ValidationResult.Success;
     }
 }
