@@ -1,3 +1,4 @@
+using API.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories.Contracts;
@@ -35,7 +36,12 @@ public abstract class CoreRepository<TPk, TEntity, TContext> : IBaseRepository<T
 
     public async Task<TEntity?> FindOneByPk(TPk pk)
     {
-        return await _context.Set<TEntity>().FindAsync(pk);
+        var foundEntity = await _context.Set<TEntity>().FindAsync(pk);
+        
+        if (foundEntity is null)
+            throw new RepositoryException(RepositoryErrorType.NotFound, $"{typeof(TEntity).Name} with pk '{pk}' was not found.");
+
+        return foundEntity;
     }
 
     public async Task<TEntity?> DeleteOneByPk(TPk pk)
@@ -43,13 +49,13 @@ public abstract class CoreRepository<TPk, TEntity, TContext> : IBaseRepository<T
         var foundEntity = FindOneByPkAsNoTracking(pk);
 
         if (foundEntity is null)
-            return null;
+            throw new RepositoryException(RepositoryErrorType.NotFound, $"{typeof(TEntity).Name} with pk '{pk}' was not found.");
 
         _context.Set<TEntity>().Remove(foundEntity);
 
-        var rowAffected = await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
-        return rowAffected.Equals(1) ? foundEntity : null;
+        return foundEntity;
     }
 
     public async Task<TEntity?> UpdateOneByPk(TPk pk, TEntity entity)
@@ -57,15 +63,15 @@ public abstract class CoreRepository<TPk, TEntity, TContext> : IBaseRepository<T
         var foundEntity = FindOneByPkAsNoTracking(pk);
 
         if (foundEntity is null)
-            return null;
+            throw new RepositoryException(RepositoryErrorType.NotFound, $"{typeof(TEntity).Name} with pk '{pk}' was not found.");
 
         entity.Pk = foundEntity.Pk;
         
         _context.Set<TEntity>().Update(entity);
 
-        var rowAffected = await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
-        return rowAffected.Equals(1) ? entity : null;
+        return entity;
     }
 
     private TEntity? FindOneByPkAsNoTracking(TPk pk)
