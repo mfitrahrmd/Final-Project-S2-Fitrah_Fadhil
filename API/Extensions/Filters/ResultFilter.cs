@@ -10,6 +10,21 @@ public class ResultFilter : ResultFilterAttribute
     {
         var objectResult = context.Result as ObjectResult;
 
+        if (!context.ModelState.IsValid)
+        {
+            var problemDetails = objectResult.Value as ValidationProblemDetails;
+
+            objectResult.Value = new BaseResponse<object>()
+            {
+                Code = problemDetails.Status.Value,
+                IsSucceeded = false,
+                Message = problemDetails.Title,
+                Errors = problemDetails.Errors
+            };
+
+            await next();
+        }
+        
         objectResult.Value = new BaseResponse<object>
         {
             Code = objectResult.StatusCode.Value,

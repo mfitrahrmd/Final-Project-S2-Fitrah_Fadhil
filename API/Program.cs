@@ -9,6 +9,7 @@ using API.Repositories.Implementations;
 using API.Services;
 using API.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -31,8 +32,8 @@ builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ExceptionFilter>();
     options.Filters.Add<ResultFilter>();
-}).ConfigureApiBehaviorOptions(options => { options.SuppressModelStateInvalidFilter = true; }).AddJsonOptions(
-    options =>
+})
+    .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.DefaultIgnoreCondition =
             JsonIgnoreCondition.WhenWritingNull; // omit properties with null
@@ -129,7 +130,10 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddRouting(options => { options.LowercaseUrls = true; });
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+});
 
 var app = builder.Build();
 
