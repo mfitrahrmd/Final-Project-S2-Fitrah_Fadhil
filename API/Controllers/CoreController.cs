@@ -51,7 +51,7 @@ public class CoreController<TRepository, TPk, TEntity, TDTO, TInsertRequest, TUp
         return Ok(_mapper.Map<TDTO>(updatedEntity));
     }
 
-    [HttpDelete]
+    [HttpDelete("{pk}")]
     public async Task<IActionResult> DeleteAsync([FromRoute] TPk pk)
     {
         var deletedEntity = await _repository.DeleteOneByPk(pk);
