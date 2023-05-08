@@ -12,11 +12,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using TokenContext = API.Data.TokenContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<Tugas6Context>();
+builder.Services.AddDbContext<TokenContext>();
 builder.Services.AddScoped<IUniversityRepository, UniversityRepository<Tugas6Context>>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository<Tugas6Context>>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository<Tugas6Context>>();
@@ -24,6 +26,7 @@ builder.Services.AddScoped<IEducationRepository, EducationRepository<Tugas6Conte
 builder.Services.AddScoped<IProfilingRepository, ProfilingRepository<Tugas6Context>>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository<Tugas6Context>>();
 builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository<Tugas6Context>>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository<TokenContext>>();
 builder.Services.AddSingleton<JwtUtil>();
 builder.Services.AddSingleton<BcryptUtil>();
 builder.Services.AddScoped<AuthService>();
