@@ -23,11 +23,14 @@ public class AuthService
 
     public AuthService(IAccountRepository accountRepository, IEmployeeRepository employeeRepository,
         IUniversityRepository universityRepository, IRoleRepository roleRepository,
-        IAccountRoleRepository accountRoleRepository, IRefreshTokenRepository refreshTokenRepository, BcryptUtil bcryptUtil, JwtUtil jwtUtil, IConfiguration config)
+        IAccountRoleRepository accountRoleRepository, IRefreshTokenRepository refreshTokenRepository,
+        BcryptUtil bcryptUtil, JwtUtil jwtUtil, IConfiguration config)
     {
-        (_accountRepository, _employeeRepository, _universityRepository, _roleRepository, _accountRoleRepository, _refreshTokenRepository,
+        (_accountRepository, _employeeRepository, _universityRepository, _roleRepository, _accountRoleRepository,
+            _refreshTokenRepository,
             _bcryptUtil, _jwtUtil, _config) = (accountRepository,
-            employeeRepository, universityRepository, roleRepository, accountRoleRepository, refreshTokenRepository, bcryptUtil, jwtUtil, config);
+            employeeRepository, universityRepository, roleRepository, accountRoleRepository, refreshTokenRepository,
+            bcryptUtil, jwtUtil, config);
     }
 
     public async Task<RegisterResponse> RegisterAsync(RegisterRequest request)
@@ -108,7 +111,7 @@ public class AuthService
 
         await _refreshTokenRepository.InsertOne(new UserToken
         {
-            Pk = foundEmployee.Pk,
+            UserId = foundEmployee.Nik,
             RefreshToken = generatedRefreshToken,
             ExpiryDate = DateTime.Now.AddHours(_config.GetValue<double>("jwt:RefreshTokenExpiresInHour"))
         });
@@ -118,5 +121,62 @@ public class AuthService
             AccessToken = generatedAccessToken,
             RefreshToken = generatedRefreshToken
         };
+    }
+
+    public async Task<RefreshTokenResponse> RefreshTokenAsync(RefreshTokenRequest request)
+    {
+        try
+        {
+            var foundRefreshToken = await _refreshTokenRepository.FindOneByRefreshTokenAsync(request.RefreshToken);
+
+            if (DateTime.Compare(foundRefreshToken.ExpiryDate, DateTime.Now) < 0)
+                throw new ApiException("Refresh token was expired") { Code = (int)HttpStatusCode.Unauthorized };
+
+            var foundEmployee = await _employeeRepository.FindOneByPk(foundRefreshToken.UserId);
+            if (foundEmployee is null)
+                throw new Exception("Employee was not found.");
+
+            var foundAccountRoles =
+                await _accountRoleRepository.FindManyByAccountNikIncludeRoleAsync(foundEmployee.Nik);
+
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, foundEmployee.Pk),
+                new(ClaimTypes.Name, foundEmployee.Fullname),
+                new(ClaimTypes.Email, foundEmployee.Email)
+            };
+
+            foundAccountRoles.ToList().ForEach(ar => { claims.Add(new Claim(ClaimTypes.Role, ar.Role.Name)); });
+
+            var generatedAccessToken = _jwtUtil.GenerateAccessToken(claims);
+            var generatedRefreshToken = _jwtUtil.GenerateRefreshToken();
+
+            await _refreshTokenRepository.DeleteOneByPk(foundRefreshToken.Pk);
+            
+            await _refreshTokenRepository.InsertOne(new UserToken
+            {
+                UserId = foundEmployee.Nik,
+                RefreshToken = generatedRefreshToken,
+                ExpiryDate = DateTime.Now.AddHours(_config.GetValue<double>("jwt:RefreshTokenExpiresInHour"))
+            });
+
+            return new RefreshTokenResponse
+            {
+                AccessToken = generatedAccessToken,
+                RefreshToken = generatedRefreshToken
+            };
+        }
+        catch (RepositoryException re)
+        {
+            switch (re.ErrorType)
+            {
+                case RepositoryErrorType.NotFound:
+                    throw new ApiException("Invalid refresh token.") { Code = (int)HttpStatusCode.Unauthorized };
+                default:
+                    throw;
+            }
+        }
+
+        return new RefreshTokenResponse();
     }
 }
