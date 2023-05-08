@@ -1,0 +1,208 @@
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<section id="section__employee" class="container d-flex flex-column gap-2">
+    <div class="modal fade text-left modal-borderless" id="modal__confirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm</h5>
+                    <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <div class="modal-body d-flex gap-4 justify-content-center align-items-center">
+                    <button id="yes" type="button" class="btn btn-light-primary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Yes</span>
+                    </button>
+                    <button id="no" type="button" class="btn btn-danger ml-1" data-bs-dismiss="modal">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">No</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+                                </div>
+    <div class="modal fade" id="modal__insertEmployee" tabindex="-1" role="dialog" aria-labelledby="modal__insertEmployee" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Insert Employee</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <form class="form" method="post" data-parsley-validate>
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="nik-column" class="form-label">Nik</label>
+                                                <input type="text" id="nik-column" class="form-control" placeholder="Nik" name="nik" minlength="1" maxlength="5" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="firstName-column" class="form-label">First Name</label>
+                                                <input type="text" id="firstName-column" class="form-control" placeholder="First Name" name="firstName" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="lastName-column" class="form-label">Last Name</label>
+                                                <input type="text" id="lastName-column" class="form-control" placeholder="Last Name" name="lastName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="birthdate-column" class="form-label">Birth Date</label>
+                                                <input type="date" id="birthdate-column" class="form-control" placeholder="Birth Date" name="birthdate" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <fieldset class="form-group mandatory">
+                                                <label for="gender-column" class="form-label">Gender</label>
+                                                <select class="form-select" id="gender-column" name="gender" data-parsley-required="true">
+                                                    <option value="L">L</option>
+                                                    <option value="P">P</option>
+                                                </select>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="hiringDate-column" class="form-label">Hiring Date</label>
+                                                <input type="date" id="hiringDate-column" class="form-control" placeholder="Hiring Date" name="hiringDate" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="email-column" class="form-label">Email</label>
+                                                <input type="email" id="email-column" class="form-control" name="email" placeholder="Email" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="phoneNumber-column" class="form-label">Phone Number</label>
+                                                <input type="text" id="phoneNumber-column" class="form-control" name="phoneNumber" placeholder="Phone Number" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row modal-footer">
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal__detailsEmployee" tabindex="-1" role="dialog" aria-labelledby="modal__detailsEmployee" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Details Employee</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <form class="form" method="post" data-parsley-validate>
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="nik-column" class="form-label">Nik</label>
+                                                <input type="text" id="nik-column" class="form-control" placeholder="Nik" name="nik" minlength="1" maxlength="5" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="firstName-column" class="form-label">First Name</label>
+                                                <input type="text" id="firstName-column" class="form-control" placeholder="First Name" name="firstName" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="lastName-column" class="form-label">Last Name</label>
+                                                <input type="text" id="lastName-column" class="form-control" placeholder="Last Name" name="lastName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="birthdate-column" class="form-label">Birth Date</label>
+                                                <input type="date" id="birthdate-column" class="form-control" placeholder="Birth Date" name="birthdate" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <fieldset class="form-group mandatory">
+                                                <label for="gender-column" class="form-label">Gender</label>
+                                                <select class="form-select" id="gender-column" name="gender" data-parsley-required="true">
+                                                    <option value="L">L</option>
+                                                    <option value="P">P</option>
+                                                </select>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="hiringDate-column" class="form-label">Hiring Date</label>
+                                                <input type="date" id="hiringDate-column" class="form-control" placeholder="Hiring Date" name="hiringDate" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="email-column" class="form-label">Email</label>
+                                                <input type="email" id="email-column" class="form-control" name="email" placeholder="Email" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mandatory">
+                                                <label for="phoneNumber-column" class="form-label">Phone Number</label>
+                                                <input type="text" id="phoneNumber-column" class="form-control" name="phoneNumber" placeholder="Phone Number" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row modal-footer">
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <a id="btn__insertEmployee" type="button" class="btn icon icon-left btn-primary align-self-end">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+        </svg> Insert Employee
+    </a>
+</section>
+
+@section Scripts
+{
+    <script src="~/lib/mazer/assets/extensions/parsleyjs/parsley.min.js"></script>
+    <script src="~/lib/mazer/assets/js/pages/parsley.js"></script>
+    <script src="~/lib/mazer/assets/extensions/sweetalert2/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/js/AdminIndex.js"></script>
+}
