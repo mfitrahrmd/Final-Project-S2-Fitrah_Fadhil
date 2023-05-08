@@ -21,6 +21,6 @@ public class TokenContext : DbContext
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite($"Data Source={_config["jwt:RefreshTokenDBPath"]}");
+        optionsBuilder.UseSqlite("Name=ConnectionStrings:TokenDB");
     }
 }
