@@ -24,13 +24,14 @@ public class ResultFilter : ResultFilterAttribute
 
             await next();
         }
-        
-        objectResult.Value = new BaseResponse<object>
-        {
-            Code = objectResult.StatusCode.Value,
-            IsSucceeded = true,
-            Data = objectResult.Value
-        };
+
+        if (objectResult != null)
+            objectResult.Value = new BaseResponse<object>
+            {
+                Code = objectResult.StatusCode.Value,
+                IsSucceeded = true,
+                Data = objectResult.Value
+            };
 
         await next();
     }
