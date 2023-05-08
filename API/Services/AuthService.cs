@@ -16,16 +16,18 @@ public class AuthService
     private readonly IUniversityRepository _universityRepository;
     private readonly IRoleRepository _roleRepository;
     private readonly IAccountRoleRepository _accountRoleRepository;
+    private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly BcryptUtil _bcryptUtil;
     private readonly JwtUtil _jwtUtil;
+    private readonly IConfiguration _config;
 
     public AuthService(IAccountRepository accountRepository, IEmployeeRepository employeeRepository,
         IUniversityRepository universityRepository, IRoleRepository roleRepository,
-        IAccountRoleRepository accountRoleRepository, BcryptUtil bcryptUtil, JwtUtil jwtUtil)
+        IAccountRoleRepository accountRoleRepository, IRefreshTokenRepository refreshTokenRepository, BcryptUtil bcryptUtil, JwtUtil jwtUtil, IConfiguration config)
     {
-        (_accountRepository, _employeeRepository, _universityRepository, _roleRepository, _accountRoleRepository,
-            _bcryptUtil, _jwtUtil) = (accountRepository,
-            employeeRepository, universityRepository, roleRepository, accountRoleRepository, bcryptUtil, jwtUtil);
+        (_accountRepository, _employeeRepository, _universityRepository, _roleRepository, _accountRoleRepository, _refreshTokenRepository,
+            _bcryptUtil, _jwtUtil, _config) = (accountRepository,
+            employeeRepository, universityRepository, roleRepository, accountRoleRepository, refreshTokenRepository, bcryptUtil, jwtUtil, config);
     }
 
     public async Task<RegisterResponse> RegisterAsync(RegisterRequest request)
@@ -94,6 +96,7 @@ public class AuthService
 
         var claims = new List<Claim>
         {
+            new(ClaimTypes.NameIdentifier, foundEmployee.Pk),
             new(ClaimTypes.Name, foundEmployee.Fullname),
             new(ClaimTypes.Email, foundEmployee.Email)
         };
@@ -101,10 +104,19 @@ public class AuthService
         foundAccountRoles.ToList().ForEach(ar => { claims.Add(new Claim(ClaimTypes.Role, ar.Role.Name)); });
 
         var generatedAccessToken = _jwtUtil.GenerateAccessToken(claims);
+        var generatedRefreshToken = _jwtUtil.GenerateRefreshToken();
+
+        await _refreshTokenRepository.InsertOne(new UserToken
+        {
+            Pk = foundEmployee.Pk,
+            RefreshToken = generatedRefreshToken,
+            ExpiryDate = DateTime.Now.AddHours(_config.GetValue<double>("jwt:RefreshTokenExpiresInHour"))
+        });
 
         return new LoginResponse
         {
-            AccessToken = generatedAccessToken
+            AccessToken = generatedAccessToken,
+            RefreshToken = generatedRefreshToken
         };
     }
 }
