@@ -32,11 +32,20 @@ public class AccountsController : CoreController<IAccountRepository, string, Acc
     }
 
     [AllowAnonymous]
-    [HttpPost("Auth")]
+    [HttpPost("Auth/Login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var result = await _authService.LoginAsync(request);
 
         return StatusCode((int)HttpStatusCode.OK, result);
+    }
+
+    [AllowAnonymous]
+    [HttpPost("Auth/Refresh")]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+    {
+        var result = await _authService.RefreshTokenAsync(request);
+
+        return Ok(result);
     }
 }
