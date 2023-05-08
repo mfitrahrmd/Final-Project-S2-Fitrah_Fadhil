@@ -23,7 +23,7 @@ public class JwtUtil
             issuer: _config["jwt:Issuer"],
             audience: _config["jwt:Audience"],
             claims: claims,
-            expires: DateTime.Now.AddMinutes(_config.GetValue<double>("jwt:ExpiresInMinute")),
+            expires: DateTime.Now.AddMinutes(_config.GetValue<double>("jwt:AccessTokenExpiresInMinute")),
             signingCredentials: key);
 
         return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
@@ -32,5 +32,10 @@ public class JwtUtil
     public string GenerateToken(params Claim[] claims)
     {
         return GenerateAccessToken(claims.AsEnumerable());
+    }
+
+    public string GenerateRefreshToken()
+    {
+        return Guid.NewGuid().ToString();
     }
 }
